@@ -1,3 +1,15 @@
+$background-color: hsl(105, 60, 35);
+$top-color: hsl(105, 60, 35);
+$mid-color: hsl(60, 100%, 32%);
+$low-color: hsl(2, 100%, 32%);
+$extra-color: #50178b;
+
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
 
 * {
     margin: 0px;
@@ -23,12 +35,102 @@ body {
         position: relative;
 
     }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: block;
+        transition: opacity 200ms ease-out;
+
+        .menu {
+            min-width: 400px;
+            min-height: 250px;
+            width: 50vw;
+            height: 40vh;
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 8px;
+            box-shadow: 0px 0px 5px black;
+            font-size: 2rem;
+            position: relative;
+            padding: 1rem;
+            overflow: hidden;
+
+            label, button {
+                font-size: 2rem;
+                font-weight: bolder;
+                border-radius: 8px;
+                background-color: transparent;
+                padding: 0.5rem;
+            }
+
+            .game-type {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr 5fr;
+                margin-bottom: 1rem;
+                
+                span{
+                    @include flexCenter();
+                }
+
+                button {
+                    color: $extra-color;
+                    border: $extra-color 2px solid;
+                    margin-right: 20px;
+                }
+            }
+            
+            .game-difficulty {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr 5fr;
+                
+                span{
+                    @include flexCenter();
+                }
+
+                button:nth-child(1) {
+                    border: $top-color 2px solid;
+                    color: $top-color;
+                }
+                button:nth-child(2) {
+                    border: $mid-color 2px solid;
+                    color: $mid-color;
+                    margin: 0px 30px;
+                }
+                button:nth-child(3) {
+                    border: $low-color 2px solid;
+                    color: $low-color;
+                }
+            }
+
+            .start-btn {
+                position: absolute;
+                bottom: 5%;
+                left: 50%;
+                transform: translate(-50%, -5%);
+                border: $top-color 2px solid;
+                background-color: $top-color;
+                color: white;
+                transition: background-color 200ms ease-out;
+            }
+        }
+    }
 }
 
 
 .upper-container {
-    background-color: #5bac2b;
-    
+    background-color: $background-color;
+    transition: background-color 400ms ease-out;
 
     .word {
         width: 100%;
@@ -99,7 +201,8 @@ body {
             font-size: 2rem;
             margin: 1rem;
             text-transform: uppercase;
-            color: rgb(218, 34, 34);
+            // color: rgb(218, 34, 34);
+            color: white;
             font-weight: bolder;
         }
     }

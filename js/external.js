@@ -26,8 +26,8 @@ export const giveRandomPokemon = async () => {
 
 
 const generateBackgroundColors = (lives) => {
-    const baseColor = [105, 60, 45];
-    const finalColor = [0, 82, 45];
+    const baseColor = [105, 60, 35];
+    const finalColor = [0, 82, 35];
     let gradients = [baseColor];
     const hDifference = parseFloat((Math.abs(baseColor[0] - finalColor[0]) / (lives-1) ).toFixed(3));
     const sDifference = parseFloat((Math.abs(baseColor[1] - finalColor[1]) / (lives-1) ).toFixed(3));
@@ -47,11 +47,14 @@ export let game = {
     totalLives: 12,
     currentLives: 12,
     difficulty: 1,
+    hasStarted: 0,
+    remainingLetters: 0, 
     colors: generateBackgroundColors(12),
     decreaseLives: () => {
-        if(game.currentLives > 0)
-            game.currentLives--;
-        else game.currentLives = 0;
+        if((game.currentLives-1) <= 0) {
+            game.currentLives = 0;
+            game.hasStarted = 0;
+        } else game.currentLives--;
     },
     changeDifficulty: (nr= 1) => {
         game.difficulty = nr;
@@ -70,10 +73,6 @@ export let game = {
     },
     changeBackgroundColor: (nr) => {
         if(!(game.totalLives-nr < game.totalLives)) return;
-
-        // console.log("h= " +game.colors[game.totalLives-nr][0]);
-        // console.log("s= " +game.colors[game.totalLives-nr][1]);
-        // console.log("l= " +game.colors[game.totalLives-nr][2]);
 
         upperContainerEl.style.backgroundColor = 
         `hsl(${game.colors[game.totalLives-nr][0]}, 

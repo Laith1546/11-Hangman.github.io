@@ -36,7 +36,8 @@ const AddToList = async (input) => {
     answersListEl.prepend(tempDiv);
 }
 
-const checkWord = (input) => {
+const checkWord = async (input) => {
+    input = input.toLowerCase();
     if(input.length > 1){
         if(input === mainWord){
             for (let i = 0; i < input.length; i++){
@@ -65,12 +66,19 @@ const checkWord = (input) => {
     }
 }
 
+const clearList = async () => {
+    wrongAnswers = [];
+    answersListEl.innerHTML = "";
+}
+
 // main 
 const chooseWord = (async () => {
     do {
         await giveRandomNoun().then((name) => mainWord = name);
     } while (mainWord.length > maxNumOfLetters)
     displayWord(mainWord);
+    checkWord("-").then(() => clearList());
+
     console.log(mainWord);
 })();
 
