@@ -1,5 +1,5 @@
 import {game} from "./external.js";
-import { chooseWord } from "./main.js";
+import {chooseWord, newGame} from "./main.js";
 
 // elements
 const gameTypeEl = document.querySelector(".game-type span");
@@ -8,6 +8,7 @@ const gameDiffEl = document.querySelector(".game-difficulty span");
 const gameDiffButtonEls = document.querySelectorAll(".game-difficulty button");
 const gameStartEl = document.querySelector(".menu > button");
 const loadingEl = document.querySelector(".loading");
+const menuEl = document.querySelector(".menu");
 
 // main 
     // highlight selected elements
@@ -43,7 +44,7 @@ gameTypeEl.addEventListener('click', (e) => {
 
             const tempColor = getComputedStyle(element).backgroundColor;
             element.style.color = tempColor;
-            e;element.style.backgroundColor = "white";
+            element.style.backgroundColor = "white";
         }
     })
 })
@@ -84,10 +85,15 @@ gameDiffEl.addEventListener('click', (e) => {
 
     // click start button 
 gameStartEl.addEventListener('click', () => {
-    console.log("-----------");
-    console.log("Type= " + game.type);
-    console.log("Diff= " + game.difficulty);
-    console.log("live= " + game.currentLives);
     loadingEl.style.display = "inline-block";
     chooseWord(game.type);
+    game.changeBackgroundColor(game.totalLives);
 })
+
+document.onkeydown = (e) => {
+    if(e.code === "Enter" && !game.hasStarted){
+        loadingEl.style.display = "inline-block";
+        chooseWord(game.type);
+        game.changeBackgroundColor(game.totalLives);
+    }
+}

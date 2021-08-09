@@ -4,6 +4,10 @@ $mid-color: hsl(60, 100%, 32%);
 $low-color: hsl(2, 100%, 32%);
 $extra-color: #50178b;
 
+
+:root {
+    --after-background-color: yellow;
+}
 @mixin flexCenter {
     display: flex;
     justify-content: center;
@@ -22,6 +26,8 @@ $extra-color: #50178b;
 body {
     height: 100vh;
     background-color: #f1faee;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .main-container {
@@ -44,8 +50,10 @@ body {
         height: 100vh;
         width: 100vw;
         background-color: rgba(0, 0, 0, 0.6);
-        display: block;
-        transition: opacity 200ms ease-out;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        transition: opacity 300ms ease-out;
 
         .menu {
             min-width: 400px;
@@ -53,17 +61,18 @@ body {
             width: 50vw;
             height: 40vh;
             background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 5px black;
+            font-size: 2rem;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border-radius: 8px;
-            box-shadow: 0px 0px 5px black;
-            font-size: 2rem;
-            position: relative;
             padding: 1rem;
             overflow: hidden;
             user-select: none;
+            // animation: show-up 500ms ease-out;
+            transition: transform 300ms ease-out, opacity 400ms ease-out;
 
             label, button {
                 font-size: 2rem;
@@ -72,6 +81,8 @@ body {
                 background-color: transparent;
                 padding: 0.5rem;
             }
+
+        
             
             .game-type {
                 width: 100%;
@@ -86,6 +97,11 @@ body {
                         border: $extra-color 2px solid;
                         margin-right: 20px;
                         transition: color 200ms ease-out, background-color 200ms ease-out;
+                        transition: transform 200ms ease-out;
+
+                        &:active {
+                            transform: scale(0.95); 
+                         }
                     }
                 }
             }
@@ -98,7 +114,11 @@ body {
                 span{
                     @include flexCenter();
                     button {
-                        transition: color 200ms ease-out, background-color 200ms ease-out;
+                        transition: color 200ms ease-out, background-color 200ms ease-out, transform 200ms ease-out;
+
+                        &:active {
+                            transform: scale(0.95); 
+                         }
                     }
                 }
 
@@ -129,10 +149,6 @@ body {
             }
 
             .loading {
-                // position: absolute;
-                // bottom: 10%;
-                // left: 65%;
-                // transform: translate(-65%, -10%);
                 font-size: 1.5rem;
                 color: white;
                 display: none;
@@ -169,10 +185,8 @@ body {
             &::after {
                 content: "";
                 width: 100%;
-                height: 0.7rem;
-                background-color: yellow;
-                border-bottom-left-radius: 5px;
-                border-bottom-right-radius: 5px;
+                height: 0.4rem;
+                background-color: var(--after-background-color);
                 position: absolute;
                 top: 100%;
                 left: 0;
@@ -189,7 +203,7 @@ body {
         height: 3rem;
         width: 15rem;
         text-align: center;
-        border-radius: 20px;
+        border-radius: 10px;
         font-size: 2rem;
         border: none;
         border: rgb(122, 120, 120) 2px solid;
@@ -224,4 +238,39 @@ body {
 
 .lower-container {
     background-color: red;
+}
+
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 100;}
+}
+
+@keyframes fade-out {
+    from {opacity: 100;}
+    to {opacity: 0;}
+}
+
+@keyframes drop-down {
+    from { 
+        opacity: 100;
+        transform: translateY(0);
+    }
+
+    to { 
+        opacity: 0;
+        transform: translateY(150%);
+    }
+}
+
+@keyframes show-up {
+    from { 
+        opacity: 0;
+        transform: translateY(150%);
+    }
+
+    to { 
+        opacity: 100;
+        transform: translateY(0);
+    }
 }

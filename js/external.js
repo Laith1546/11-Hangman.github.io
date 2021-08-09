@@ -1,3 +1,5 @@
+import { showMenu } from "./main.js";
+
 const upperContainerEl = document.querySelector(".upper-container");
 
 export const giveRandomNoun = async () => {
@@ -43,6 +45,8 @@ const generateBackgroundColors = (lives) => {
     return gradients;
 }
 
+
+
 export let game = {
     totalLives: 12,
     currentLives: 12,
@@ -50,13 +54,22 @@ export let game = {
     hasStarted: 0,
     remainingLetters: 0,
     Type: "noun",
-    // currentType: game.types[0],
     colors: generateBackgroundColors(12),
     decreaseLives: () => {
         if((game.currentLives-1) <= 0) {
             game.currentLives = 0;
-            game.hasStarted = 0;
+            setTimeout(() => game.hasStarted = 0, 50);
+            showMenu();
         } else game.currentLives--;
+    },
+    decreaseLetters: () => {
+        game.remainingLetters--;
+
+        if(game.remainingLetters <= 0){
+            game.remainingLetters = 0;
+            setTimeout(() => game.hasStarted = 0, 50);
+            showMenu();
+        }
     },
     changeDifficulty: (nr= 1) => {
         if(nr === 1 || nr < 1 || nr === "easy"){

@@ -1,3 +1,7 @@
+:root {
+  --after-background-color: yellow;
+}
+
 * {
   margin: 0px;
   padding: 0px;
@@ -10,6 +14,8 @@
 body {
   height: 100vh;
   background-color: #f1faee;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .main-container {
@@ -33,9 +39,8 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.6);
-  display: block;
-  -webkit-transition: opacity 200ms ease-out;
-  transition: opacity 200ms ease-out;
+  -webkit-transition: opacity 300ms ease-out;
+  transition: opacity 300ms ease-out;
 }
 
 .main-container .overlay .menu {
@@ -44,22 +49,25 @@ body {
   width: 50vw;
   height: 40vh;
   background-color: white;
+  border-radius: 8px;
+  -webkit-box-shadow: 0px 0px 5px black;
+          box-shadow: 0px 0px 5px black;
+  font-size: 2rem;
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  border-radius: 8px;
-  -webkit-box-shadow: 0px 0px 5px black;
-          box-shadow: 0px 0px 5px black;
-  font-size: 2rem;
-  position: relative;
   padding: 1rem;
   overflow: hidden;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -webkit-transition: opacity 400ms ease-out, -webkit-transform 300ms ease-out;
+  transition: opacity 400ms ease-out, -webkit-transform 300ms ease-out;
+  transition: transform 300ms ease-out, opacity 400ms ease-out;
+  transition: transform 300ms ease-out, opacity 400ms ease-out, -webkit-transform 300ms ease-out;
 }
 
 .main-container .overlay .menu label, .main-container .overlay .menu button {
@@ -101,6 +109,15 @@ body {
   margin-right: 20px;
   -webkit-transition: color 200ms ease-out, background-color 200ms ease-out;
   transition: color 200ms ease-out, background-color 200ms ease-out;
+  -webkit-transition: -webkit-transform 200ms ease-out;
+  transition: -webkit-transform 200ms ease-out;
+  transition: transform 200ms ease-out;
+  transition: transform 200ms ease-out, -webkit-transform 200ms ease-out;
+}
+
+.main-container .overlay .menu .game-type span button:active {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
 }
 
 .main-container .overlay .menu .game-difficulty {
@@ -128,8 +145,15 @@ body {
 }
 
 .main-container .overlay .menu .game-difficulty span button {
-  -webkit-transition: color 200ms ease-out, background-color 200ms ease-out;
-  transition: color 200ms ease-out, background-color 200ms ease-out;
+  -webkit-transition: color 200ms ease-out, background-color 200ms ease-out, -webkit-transform 200ms ease-out;
+  transition: color 200ms ease-out, background-color 200ms ease-out, -webkit-transform 200ms ease-out;
+  transition: color 200ms ease-out, background-color 200ms ease-out, transform 200ms ease-out;
+  transition: color 200ms ease-out, background-color 200ms ease-out, transform 200ms ease-out, -webkit-transform 200ms ease-out;
+}
+
+.main-container .overlay .menu .game-difficulty span button:active {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
 }
 
 .main-container .overlay .menu .game-difficulty button:nth-child(1) {
@@ -199,10 +223,8 @@ body {
 .upper-container .word .letter::after {
   content: "";
   width: 100%;
-  height: 0.7rem;
-  background-color: yellow;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  height: 0.4rem;
+  background-color: var(--after-background-color);
   position: absolute;
   top: 100%;
   left: 0;
@@ -218,7 +240,7 @@ body {
   height: 3rem;
   width: 15rem;
   text-align: center;
-  border-radius: 20px;
+  border-radius: 10px;
   font-size: 2rem;
   border: none;
   border: #7a7878 2px solid;
@@ -252,5 +274,93 @@ body {
 
 .lower-container {
   background-color: red;
+}
+
+@-webkit-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+@-webkit-keyframes fade-out {
+  from {
+    opacity: 100;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 100;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes drop-down {
+  from {
+    opacity: 100;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(150%);
+            transform: translateY(150%);
+  }
+}
+
+@keyframes drop-down {
+  from {
+    opacity: 100;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(150%);
+            transform: translateY(150%);
+  }
+}
+
+@-webkit-keyframes show-up {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(150%);
+            transform: translateY(150%);
+  }
+  to {
+    opacity: 100;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes show-up {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(150%);
+            transform: translateY(150%);
+  }
+  to {
+    opacity: 100;
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
 }
 /*# sourceMappingURL=style.css.map */
