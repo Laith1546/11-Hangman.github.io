@@ -18,11 +18,21 @@ body {
   overflow-y: hidden;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .main-container {
   height: 100vh;
   overflow-y: scroll;
   -ms-scroll-snap-type: y mandatory;
       scroll-snap-type: y mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.main-container::-webkit-scrollbar {
+  display: none;
 }
 
 .main-container section {
@@ -192,9 +202,22 @@ body {
 }
 
 .upper-container {
+  position: relative;
   background-color: #3e8f24;
   -webkit-transition: background-color 700ms ease-out;
   transition: background-color 700ms ease-out;
+}
+
+.upper-container .restart-btn {
+  color: white;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  -webkit-transition: -webkit-transform 500ms linear;
+  transition: -webkit-transform 500ms linear;
+  transition: transform 500ms linear;
+  transition: transform 500ms linear, -webkit-transform 500ms linear;
 }
 
 .upper-container .word {
@@ -218,6 +241,8 @@ body {
   padding: 1rem;
   text-transform: uppercase;
   text-align: center;
+  -webkit-transition: padding 400ms ease-in-out, margin 400ms ease-in-out, font-size 400ms ease-in-out;
+  transition: padding 400ms ease-in-out, margin 400ms ease-in-out, font-size 400ms ease-in-out;
 }
 
 .upper-container .word .letter::after {
@@ -228,6 +253,8 @@ body {
   position: absolute;
   top: 100%;
   left: 0;
+  -webkit-transition: background-color 300ms ease-in-out;
+  transition: background-color 300ms ease-in-out;
 }
 
 .upper-container .word-input {
@@ -247,6 +274,7 @@ body {
   -webkit-box-shadow: inset 0px 0px 5px black;
           box-shadow: inset 0px 0px 5px black;
   caret-color: transparent;
+  outline: none;
   -webkit-transition: border 200ms linear;
   transition: border 200ms linear;
 }

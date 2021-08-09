@@ -23,17 +23,29 @@ $extra-color: #50178b;
     scroll-behavior: smooth;
 }
 
+
+
 body {
     height: 100vh;
     background-color: #f1faee;
     overflow-x: hidden;
     overflow-y: hidden;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .main-container {
     height: 100vh;
     overflow-y: scroll;   
     scroll-snap-type: y mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     section {
         height: 100vh;
@@ -159,8 +171,18 @@ body {
 
 
 .upper-container {
+    position: relative;
     background-color: $background-color;
     transition: background-color 700ms ease-out;
+
+    .restart-btn {
+        color: white;
+        font-size: 1.5rem;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        transition: transform 500ms linear;
+    }
 
     .word {
         width: 100%;
@@ -181,6 +203,7 @@ body {
             padding: 1rem;
             text-transform: uppercase;
             text-align: center;
+            transition: padding 400ms ease-in-out, margin 400ms ease-in-out, font-size 400ms ease-in-out;
 
             &::after {
                 content: "";
@@ -190,6 +213,7 @@ body {
                 position: absolute;
                 top: 100%;
                 left: 0;
+                transition: background-color 300ms ease-in-out;
             }
         }
     }
@@ -209,6 +233,7 @@ body {
         border: rgb(122, 120, 120) 2px solid;
         box-shadow: inset 0px 0px 5px black;
         caret-color: transparent;
+        outline: none;
         transition: border 200ms linear;
 
         &:focus {

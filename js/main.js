@@ -2,24 +2,36 @@ import {giveRandomAnimal, giveRandomPokemon, giveRandomNoun, game} from './exter
 // import * as menu from './menu';
 
 // elements 
+const root = document.querySelector(":root");
 const wordDivEl = document.querySelector(".word");
 const wordInputEl = document.querySelector(".word-input");
 const answersListEl = document.querySelector(".answers-list");
 const overlayEl = document.querySelector(".overlay");
 const loadingEl = document.querySelector(".loading");
-
+const restartBtnEl = document.querySelector(".restart-btn");
 // variables
 const maxNumOfLetters = 12;
 let mainWord = "";
 let wrongAnswers = [];
+const afterColor = "yellow";
 
 // functions
-const displayWord =  (word) => {
+const displayWord =  (word, show= false) => {
+    if(show) {
+        const letters = wordDivEl.querySelectorAll(".letter");
+        
+        for (let i = 0; i < word.length; i++){
+            letters[i].textContent = word[i];
+        }
+        return;
+    }
+
     for (let i = 0; i < word.length; i++){
         const tempDiv = document.createElement("div");
         tempDiv.classList.add("letter");
-        // tempDiv.textContent = word[i];
-        tempDiv.textContent = " ";
+        
+        if(show) tempDiv.textContent = word[i];
+        else tempDiv.textContent = " ";
         wordDivEl.appendChild(tempDiv);
     }
 }
@@ -71,7 +83,7 @@ const checkWord = async (input) => {
 
 const clearList = async () => {
     wrongAnswers = [];
-    answersListEl.innerHTML = "";
+    answersListEl.innerHTML = " ";
 }
 
 export const showMenu = async (show= true) => {
@@ -91,6 +103,7 @@ export const newGame =  () => {
     clearList();
     wordDivEl.innerHTML = " ";
     wordInputEl.value = "";
+    gameWon(true);
 }
 
 export const chooseWord = async (type) => {
@@ -122,11 +135,56 @@ export const chooseWord = async (type) => {
     console.log(mainWord);
 }
 
+export const gameWon = (revers= false) => {
+    if(revers){
+      wordInputEl.disabled = false;
+        root.style.setProperty("--after-background-color", afterColor);
+
+        setTimeout(() => {
+            wordDivEl.querySelectorAll(".letter").forEach(element => {
+                element.style.width = "4rem";
+                element.style.margin = "1rem 0.5rem";
+                element.style.fontSize = "3rem";  
+            })
+        }, 300);
+        return;
+    }
+    
+    wordInputEl.disabled = true;
+    root.style.setProperty("--after-background-color", "transparent");
+    clearList();
+    displayWord(mainWord, true);
+    setTimeout(() => {
+        wordDivEl.querySelectorAll(".letter").forEach(element => {
+            element.style.width = "auto";
+            element.style.margin = "1rem -1rem";
+            element.style.fontSize = "8rem";
+        })
+    }, 300);
+}
+
+
 // main 
+    // input field
 wordInputEl.addEventListener('keydown', key => {
     if(key.code === "Enter" && wordInputEl.value !== ""){
         checkWord(wordInputEl.value);
         wordInputEl.value = "";
-        console.log("remaining: " + game.remainingLetters);
     }   
 })
+
+    // restart button
+    restartBtnEl.addEventListener('click', () => {
+        showMenu();
+        console.log("bruh");
+    })
+restartBtnEl.onmouseover = () => {
+    restartBtnEl.style.transform = "rotateZ(180deg)"
+}
+restartBtnEl.onmouseleave = () => {
+    restartBtnEl.style.transform = "rotateZ(0deg)";
+}
+
+
+
+// error handling 
