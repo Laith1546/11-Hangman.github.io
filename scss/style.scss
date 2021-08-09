@@ -63,6 +63,7 @@ body {
             position: relative;
             padding: 1rem;
             overflow: hidden;
+            user-select: none;
 
             label, button {
                 font-size: 2rem;
@@ -71,7 +72,7 @@ body {
                 background-color: transparent;
                 padding: 0.5rem;
             }
-
+            
             .game-type {
                 width: 100%;
                 display: grid;
@@ -80,12 +81,12 @@ body {
                 
                 span{
                     @include flexCenter();
-                }
-
-                button {
-                    color: $extra-color;
-                    border: $extra-color 2px solid;
-                    margin-right: 20px;
+                    button {
+                        color: $extra-color;
+                        border: $extra-color 2px solid;
+                        margin-right: 20px;
+                        transition: color 200ms ease-out, background-color 200ms ease-out;
+                    }
                 }
             }
             
@@ -96,6 +97,9 @@ body {
                 
                 span{
                     @include flexCenter();
+                    button {
+                        transition: color 200ms ease-out, background-color 200ms ease-out;
+                    }
                 }
 
                 button:nth-child(1) {
@@ -121,7 +125,17 @@ body {
                 border: $top-color 2px solid;
                 background-color: $top-color;
                 color: white;
-                transition: background-color 200ms ease-out;
+                transition: background-color 200ms ease-out, width 200ms ease-out;
+            }
+
+            .loading {
+                // position: absolute;
+                // bottom: 10%;
+                // left: 65%;
+                // transform: translate(-65%, -10%);
+                font-size: 1.5rem;
+                color: white;
+                display: none;
             }
         }
     }
@@ -130,7 +144,7 @@ body {
 
 .upper-container {
     background-color: $background-color;
-    transition: background-color 400ms ease-out;
+    transition: background-color 700ms ease-out;
 
     .word {
         width: 100%;

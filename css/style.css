@@ -56,6 +56,10 @@ body {
   position: relative;
   padding: 1rem;
   overflow: hidden;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .main-container .overlay .menu label, .main-container .overlay .menu button {
@@ -91,10 +95,12 @@ body {
           flex-direction: row;
 }
 
-.main-container .overlay .menu .game-type button {
+.main-container .overlay .menu .game-type span button {
   color: #50178b;
   border: #50178b 2px solid;
   margin-right: 20px;
+  -webkit-transition: color 200ms ease-out, background-color 200ms ease-out;
+  transition: color 200ms ease-out, background-color 200ms ease-out;
 }
 
 .main-container .overlay .menu .game-difficulty {
@@ -119,6 +125,11 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+}
+
+.main-container .overlay .menu .game-difficulty span button {
+  -webkit-transition: color 200ms ease-out, background-color 200ms ease-out;
+  transition: color 200ms ease-out, background-color 200ms ease-out;
 }
 
 .main-container .overlay .menu .game-difficulty button:nth-child(1) {
@@ -146,14 +157,20 @@ body {
   border: #3e8f24 2px solid;
   background-color: #3e8f24;
   color: white;
-  -webkit-transition: background-color 200ms ease-out;
-  transition: background-color 200ms ease-out;
+  -webkit-transition: background-color 200ms ease-out, width 200ms ease-out;
+  transition: background-color 200ms ease-out, width 200ms ease-out;
+}
+
+.main-container .overlay .menu .loading {
+  font-size: 1.5rem;
+  color: white;
+  display: none;
 }
 
 .upper-container {
   background-color: #3e8f24;
-  -webkit-transition: background-color 400ms ease-out;
-  transition: background-color 400ms ease-out;
+  -webkit-transition: background-color 700ms ease-out;
+  transition: background-color 700ms ease-out;
 }
 
 .upper-container .word {

@@ -48,7 +48,9 @@ export let game = {
     currentLives: 12,
     difficulty: 1,
     hasStarted: 0,
-    remainingLetters: 0, 
+    remainingLetters: 0,
+    Type: "noun",
+    // currentType: game.types[0],
     colors: generateBackgroundColors(12),
     decreaseLives: () => {
         if((game.currentLives-1) <= 0) {
@@ -57,16 +59,18 @@ export let game = {
         } else game.currentLives--;
     },
     changeDifficulty: (nr= 1) => {
-        game.difficulty = nr;
-        if(nr === 1 || nr < 1){
+        if(nr === 1 || nr < 1 || nr === "easy"){
             game.totalLives = 12;
             game.currentLives = game.totalLives;
-        } else if (nr === 2) {
+            game.difficulty = 1;
+        } else if (nr === 2 || nr === "normal") {
             game.totalLives = 9;
             game.currentLives = game.totalLives;
+            game.difficulty = 2;
         } else {
             game.totalLives = 6;
             game.currentLives = game.totalLives;
+            game.difficulty = 3;
         }
 
         game.colors = generateBackgroundColors(game.totalLives);

@@ -1,11 +1,12 @@
 import {giveRandomAnimal, giveRandomPokemon, giveRandomNoun, game} from './external.js';
-
+// import * as menu from './menu';
 
 // elements 
 const upperContainerEl = document.querySelector(".upper-container");
 const wordDivEl = document.querySelector(".word");
 const wordInputEl = document.querySelector(".word-input");
 const answersListEl = document.querySelector(".answers-list");
+const overlayEl = document.querySelector(".overlay");
 
 // variables
 const maxNumOfLetters = 12;
@@ -58,7 +59,7 @@ const checkWord = async (input) => {
                 }
             }
         }
-        else if(!wrongAnswers.includes(input)) {
+        else if(!wrongAnswers.includes(input) && input !== "-") {
             AddToList(input);
             game.decreaseLives();
             game.changeBackgroundColor(game.currentLives);
@@ -71,21 +72,40 @@ const clearList = async () => {
     answersListEl.innerHTML = "";
 }
 
-// main 
-const chooseWord = (async () => {
+export const chooseWord = async (type) => {
     do {
-        await giveRandomNoun().then((name) => mainWord = name);
+        if(type === "noun")
+            await giveRandomNoun()
+                .then((name) => mainWord = name)
+                .then(() => {
+                    overlayEl.style.opacity = "0";
+                    setTimeout(() => overlayEl.style.display = "none", 200);
+                })
+        else if (type === "animal")
+            await giveRandomAnimal()
+                .then((name) => mainWord = name)
+                .then(() => {
+                    overlayEl.style.opacity = "0";
+                    setTimeout(() => overlayEl.style.display = "none", 200);
+                })
+        else if (type === "pokemon")
+            await giveRandomPokemon()
+                .then((name) => mainWord = name)
+                .then(() => {
+                    overlayEl.style.opacity = "0";
+                    setTimeout(() => overlayEl.style.display = "none", 200);
+                })
     } while (mainWord.length > maxNumOfLetters)
     displayWord(mainWord);
     checkWord("-").then(() => clearList());
 
     console.log(mainWord);
-})();
+}
 
+// main 
 wordInputEl.addEventListener('keydown', key => {
     if(key.code === "Enter" && wordInputEl.value !== ""){
         checkWord(wordInputEl.value);
         wordInputEl.value = "";
     }   
 })
-// there are word with "-"
