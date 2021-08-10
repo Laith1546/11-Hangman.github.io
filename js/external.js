@@ -50,7 +50,7 @@ const generateBackgroundColors = (lives) => {
 export let game = {
     totalLives: 12,
     currentLives: 12,
-    difficulty: 1,
+    difficulty: 2,
     hasStarted: 0,
     remainingLetters: 0,
     Type: "noun",

@@ -9,11 +9,13 @@ const answersListEl = document.querySelector(".answers-list");
 const overlayEl = document.querySelector(".overlay");
 const loadingEl = document.querySelector(".loading");
 const restartBtnEl = document.querySelector(".restart-btn");
+
 // variables
 const maxNumOfLetters = 12;
 let mainWord = "";
 let wrongAnswers = [];
 const afterColor = "yellow";
+const purplishColor = "#50178b";
 
 // functions
 const displayWord =  (word, show= false) => {
@@ -104,6 +106,9 @@ export const newGame =  () => {
     wordDivEl.innerHTML = " ";
     wordInputEl.value = "";
     gameWon(true);
+    wordInputEl.style.backgroundColor = "white";
+    wordInputEl.style.borderColor = "black";
+    wordInputEl.style.color = "black";
 }
 
 export const chooseWord = async (type) => {
@@ -163,10 +168,47 @@ export const gameWon = (revers= false) => {
     }, 300);
 }
 
+const highlightAnswer = async () => {
+    const answers = answersListEl.querySelectorAll(".answer");
+    if(answers === null) return;
+    
+    answers.forEach(answer => {
+        if(answer.textContent === wordInputEl.value){
+
+            answer.style.textShadow = 
+                `1px 1px 0px white,
+                -1px 1px 0px white,
+                1px -1px 0px white,
+                -1px -1px 0px white`;
+            answer.style.color = purplishColor;
+            answer.style.marginLeft = "2rem";
+            setTimeout(() => {
+                wordInputEl.style.backgroundColor = purplishColor;
+                wordInputEl.style.borderColor = "white";
+                wordInputEl.style.color = "white";
+            }, 0)
+        } else {
+            answer.style.textShadow = "none";
+            answer.style.color = "white";
+            answer.style.marginLeft = "1rem";
+            wordInputEl.style.backgroundColor = "white";
+            wordInputEl.style.borderColor = "black";
+            wordInputEl.style.color = "black";
+        }
+    })
+} 
 
 // main 
+    // keep input field focused
+document.addEventListener("keydown", () => {
+    if(game.hasStarted)
+        wordInputEl.focus();
+})
+
     // input field
 wordInputEl.addEventListener('keydown', key => {
+    setTimeout(highlightAnswer, 10);
+
     if(key.code === "Enter" && wordInputEl.value !== ""){
         checkWord(wordInputEl.value);
         wordInputEl.value = "";
@@ -176,7 +218,6 @@ wordInputEl.addEventListener('keydown', key => {
     // restart button
     restartBtnEl.addEventListener('click', () => {
         showMenu();
-        console.log("bruh");
     })
 restartBtnEl.onmouseover = () => {
     restartBtnEl.style.transform = "rotateZ(180deg)"
@@ -184,7 +225,5 @@ restartBtnEl.onmouseover = () => {
 restartBtnEl.onmouseleave = () => {
     restartBtnEl.style.transform = "rotateZ(0deg)";
 }
-
-
 
 // error handling 

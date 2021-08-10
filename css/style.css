@@ -270,13 +270,14 @@ body::-webkit-scrollbar {
   border-radius: 10px;
   font-size: 2rem;
   border: none;
-  border: #7a7878 2px solid;
+  border: black 2px solid;
   -webkit-box-shadow: inset 0px 0px 5px black;
           box-shadow: inset 0px 0px 5px black;
   caret-color: transparent;
   outline: none;
-  -webkit-transition: border 200ms linear;
-  transition: border 200ms linear;
+  text-transform: uppercase;
+  -webkit-transition: border 200ms linear, color 300ms linear, background-color 300ms linear;
+  transition: border 200ms linear, color 300ms linear, background-color 300ms linear;
 }
 
 .upper-container .word-input:focus {
@@ -298,6 +299,8 @@ body::-webkit-scrollbar {
   text-transform: uppercase;
   color: white;
   font-weight: bolder;
+  -webkit-transition: text-shadow 300ms linear, color 300ms linear, margin 300ms ease-out;
+  transition: text-shadow 300ms linear, color 300ms linear, margin 300ms ease-out;
 }
 
 .lower-container {
