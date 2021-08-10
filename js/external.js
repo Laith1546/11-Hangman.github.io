@@ -1,7 +1,10 @@
 import { showMenu, gameWon } from "./main.js";
 
 const upperContainerEl = document.querySelector(".upper-container");
+const livesDiv = document.querySelector(".lives");
+
 const showMenuDelay = 2100;
+
 export const giveRandomNoun = async () => {
     const jsonData = await fetch("https://random-word-form.herokuapp.com/random/noun");
     // const jsonData = await fetch("https://random-words-api.vercel.app/word");
@@ -58,10 +61,14 @@ export let game = {
     decreaseLives: () => {
         if((game.currentLives-1) <= 0) {
             game.currentLives = 0;
+            livesDiv.textContent = `lives: 0`;
             setTimeout(() => game.hasStarted = 0, 50);
             gameWon();
             setTimeout(showMenu, showMenuDelay);
-        } else game.currentLives--;
+        } else {
+            game.currentLives--;
+            livesDiv.textContent = `lives: ${game.currentLives}`;
+        }
     },
     decreaseLetters: () => {
         game.remainingLetters--;

@@ -117,12 +117,10 @@ body::-webkit-scrollbar {
   color: #50178b;
   border: #50178b 2px solid;
   margin-right: 20px;
-  -webkit-transition: color 200ms ease-out, background-color 200ms ease-out;
-  transition: color 200ms ease-out, background-color 200ms ease-out;
-  -webkit-transition: -webkit-transform 200ms ease-out;
-  transition: -webkit-transform 200ms ease-out;
-  transition: transform 200ms ease-out;
-  transition: transform 200ms ease-out, -webkit-transform 200ms ease-out;
+  -webkit-transition: color 200ms ease-out, background-color 200ms ease-out, -webkit-transform 200ms ease-out;
+  transition: color 200ms ease-out, background-color 200ms ease-out, -webkit-transform 200ms ease-out;
+  transition: color 200ms ease-out, background-color 200ms ease-out, transform 200ms ease-out;
+  transition: color 200ms ease-out, background-color 200ms ease-out, transform 200ms ease-out, -webkit-transform 200ms ease-out;
 }
 
 .main-container .overlay .menu .game-type span button:active {
@@ -201,6 +199,17 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+.main-container .overlay .menu .ribbon {
+  position: absolute;
+  width: 15rem;
+  height: 3rem;
+  bottom: 1rem;
+  left: -4.5rem;
+  -webkit-transform: rotate(35deg);
+          transform: rotate(35deg);
+  background-color: #3e8f24;
+}
+
 .upper-container {
   position: relative;
   background-color: #3e8f24;
@@ -228,21 +237,27 @@ body::-webkit-scrollbar {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .upper-container .word .letter {
   position: relative;
-  height: 5rem;
-  width: 4rem;
+  height: 4rem;
+  width: 3rem;
   font-size: 3rem;
   color: white;
   display: inline-block;
-  margin: 1rem 0.5rem;
-  padding: 1rem;
+  margin: 0rem 0.5rem;
+  padding: 0rem 0.5rem 2rem 0.5rem;
   text-transform: uppercase;
   text-align: center;
-  -webkit-transition: padding 400ms ease-in-out, margin 400ms ease-in-out, font-size 400ms ease-in-out;
-  transition: padding 400ms ease-in-out, margin 400ms ease-in-out, font-size 400ms ease-in-out;
+  -webkit-transition: text-shadow 250ms linear,  color 250ms linear, font-size 300ms ease-in-out, padding 150ms ease-out, -webkit-transform 300ms ease-out;
+  transition: text-shadow 250ms linear,  color 250ms linear, font-size 300ms ease-in-out, padding 150ms ease-out, -webkit-transform 300ms ease-out;
+  transition: transform 300ms ease-out, text-shadow 250ms linear,  color 250ms linear, font-size 300ms ease-in-out, padding 150ms ease-out;
+  transition: transform 300ms ease-out, text-shadow 250ms linear,  color 250ms linear, font-size 300ms ease-in-out, padding 150ms ease-out, -webkit-transform 300ms ease-out;
 }
 
 .upper-container .word .letter::after {
@@ -276,8 +291,8 @@ body::-webkit-scrollbar {
   caret-color: transparent;
   outline: none;
   text-transform: uppercase;
-  -webkit-transition: border 200ms linear, color 300ms linear, background-color 300ms linear;
-  transition: border 200ms linear, color 300ms linear, background-color 300ms linear;
+  -webkit-transition: border 200ms linear, color 300ms linear, background-color 300ms linear, opacity 300ms ease-out;
+  transition: border 200ms linear, color 300ms linear, background-color 300ms linear, opacity 300ms ease-out;
 }
 
 .upper-container .word-input:focus {
@@ -301,6 +316,27 @@ body::-webkit-scrollbar {
   font-weight: bolder;
   -webkit-transition: text-shadow 300ms linear, color 300ms linear, margin 300ms ease-out;
   transition: text-shadow 300ms linear, color 300ms linear, margin 300ms ease-out;
+}
+
+.upper-container .description, .upper-container .lives {
+  z-index: inherit;
+  position: absolute;
+  height: 2rem;
+  min-width: 3rem;
+  bottom: 1rem;
+  right: 1rem;
+  text-transform: capitalize;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: bold;
+  -webkit-transition: -webkit-transform 300ms ease-out;
+  transition: -webkit-transform 300ms ease-out;
+  transition: transform 300ms ease-out;
+  transition: transform 300ms ease-out, -webkit-transform 300ms ease-out;
+}
+
+.upper-container .lives {
+  bottom: 3rem;
 }
 
 .lower-container {
