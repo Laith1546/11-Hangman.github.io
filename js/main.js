@@ -10,6 +10,8 @@ const loadingEl = document.querySelector(".loading");
 const restartBtnEl = document.querySelector(".restart-btn");
 const wordDescDiv = document.querySelector(".description");
 const livesDiv = document.querySelector(".lives");
+const timesEl = document.querySelector(".fa-times");
+
 // variables
 const maxNumOfLetters = 12;
 let mainWord = "";
@@ -18,58 +20,78 @@ const afterColor = "yellow";
 const purplishColor = "#50178b";
 
 // functions
-const moveIn = (element, direction= "top", speed= 300, delay= 100) => {
-    let add = "";
-    // if(getComputedStyle(element).transform.length > 0)  add = ",";
+const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out") => {
+    speed /= 1000;
 
-    element.style.transition = `${add}transform 0ms ease-out`;
+    const property = ["transform", "-webkit-transform"];
+    const setTransition = (sp= speed, meth= method) => {
+        for(let i = 0; i < 2; i++){
+            let elemTrans = getComputedStyle(element).transition;
+            let startPos = elemTrans.indexOf(property[i]) + property[i].length;
+            let endPos = elemTrans.indexOf(",", startPos);
+            if(endPos === -1) endPos = elemTrans.length;
+    
+            const beforeString = elemTrans.substring(0, startPos);
+            const afterString = elemTrans.substring(endPos, elemTrans.length);
+            
+            elemTrans= `${beforeString} ${sp}s ${meth} 0s${afterString}`;
+            element.style.transition = elemTrans;
+        }
+    }
+    // element.style.opacity = "0";
+    setTransition(0, method);
     const pos = element.getBoundingClientRect();
 
-    if(direction === "top"){
+    if(from === "bottom"){
         const elemHeight = 
             getComputedStyle(element).height.substring(0, getComputedStyle(element).height.length -2);
         element.style.transform = 
             `translateY(${window.innerHeight - pos.bottom + parseInt(elemHeight)}px)`;
 
         setTimeout(() => {
-            element.style.transition = `${add}transform ${speed}ms ease-out`;
+            // element.style.transition = `transform ${speed}s ease-out`;
+            setTransition(speed);
             element.style.transform = `translateY(0%)`;
         }, delay)
         
-    } else if (direction === "bottom"){
+    } else if (from === "top"){
         const elemHeight = 
             getComputedStyle(element).height.substring(0, getComputedStyle(element).height.length -2);
         element.style.transform = 
             `translateY(-${window.innerHeight + pos.top + parseInt(elemHeight)}px)`;
 
         setTimeout(() => {
-            element.style.transition = `${add}transform ${speed}ms ease-out`;
+            // element.style.transition = `transform ${speed}s ease-out`;
+            setTransition(speed);
             element.style.transform = `translateY(0%)`;
         }, delay)
         
-    } else if (direction === "left"){
+    } else if (from === "left"){
         const elemWidth = 
             getComputedStyle(element).height.substring(0, getComputedStyle(element).width.length -2);
         element.style.transform = 
             `translateX(-${window.innerWidth + pos.left + parseInt(elemWidth)}px)`;
 
         setTimeout(() => {
-            element.style.transition = `${add}transform ${speed}ms ease-out`;
+            // element.style.transition = `transform ${speed}s ease-out`;
+            setTransition(speed);
             element.style.transform = `translateX(0%)`;
         }, delay)
    
-    } else if (direction === "right"){
+    } else if (from === "right"){
         const elemWidth = 
             getComputedStyle(element).height.substring(0, getComputedStyle(element).width.length -2);
         element.style.transform = 
             `translateX(${window.innerWidth + pos.right + parseInt(elemWidth)}px)`;
 
         setTimeout(() => {
-            element.style.transition = `${add}transform ${speed}ms ease-out`;
+            // element.style.transition = `transform ${speed}s ease-out`;
+            setTransition(speed);
             element.style.transform = `translateX(0%)`;
         }, delay)
-   
     }
+
+    element.style.opacity = "100";
 }
 
 const displayWord =  (word, show= false) => {
@@ -158,29 +180,12 @@ export const showMenu = (show= true, delay= 300) => {
     }
 }
 
-export const newGame =  () => {
-    game.hasStarted = 1;
-    game.currentLives = game.totalLives;
-    game.changeBackgroundColor(game.totalLives);
-    clearList();
-    wordDivEl.innerHTML = " ";
-    wordInputEl.value = "";
-    gameWon(true);
-    wordInputEl.style.backgroundColor = "white";
-    wordInputEl.style.borderColor = "black";
-    wordInputEl.style.color = "black";
-}
-
 export const chooseWord = async (type) => {
-    newGame();
+    // newGame();
     do {
         if(type === "noun"){
             mainWord = await giveRandomNoun();
             showMenu(false);
-            // .then((name) => {
-            //     mainWord = name;
-            //     showMenu(false);
-            // })
         }
         else if (type === "animal"){
             mainWord = await giveRandomAnimal();
@@ -200,11 +205,13 @@ export const chooseWord = async (type) => {
         .then(() =>{
             clearList();
             loadingEl.style.display = "none";
+            wordInputEl.style.opacity = "100";
             wordInputEl.focus();
 
             // description & lives and animation
-            moveIn(livesDiv, "top", 300, 300);
-            moveIn(wordDescDiv, "top", 300, 100);
+            moveIn(livesDiv, "bottom", 300, 300);
+            moveIn(wordDescDiv, "bottom", 300, 100);
+
             let article = "a";
             let wordLength = mainWord.length;
             if(game.type === "animal")
@@ -218,28 +225,14 @@ export const chooseWord = async (type) => {
     console.log(mainWord);
 }
 
-export const gameWon = (revers= false) => {
-    if(revers){
-      wordInputEl.disabled = false;
-        root.style.setProperty("--after-background-color", afterColor);
-
-        wordInputEl.style.opacity = "100";
-        setTimeout(() => {
-            wordDivEl.querySelectorAll(".letter").forEach(element => {
-                element.style.userSelect = "none";
-                element.style.width = "3rem";
-                element.style.margin = "1rem 0.5rem";
-                element.style.fontSize = "3rem";  
-            })
-        }, 300);
-        return;
-    }
-    
+export const gameEnded = () => {
     wordInputEl.disabled = true;
     root.style.setProperty("--after-background-color", "transparent");
     clearList();
     displayWord(mainWord, true);
     wordInputEl.style.opacity = "0";
+    wordDescDiv.style.opacity = "0";
+    livesDiv.style.opacity = "0";
     setTimeout(() => {
         wordDivEl.querySelectorAll(".letter").forEach(element => {
             element.style.userSelect = "text";
@@ -295,6 +288,31 @@ const highlightAnswer = async () => {
     })
 } 
 
+export const startGame = () => {
+    chooseWord(game.type);
+    // setting variables
+    game.hasStarted = 1;
+    game.currentLives = game.totalLives;
+    game.changeBackgroundColor(game.totalLives);
+    clearList();
+    wordDivEl.innerHTML = " ";
+    wordInputEl.value = "";
+    wordInputEl.style.backgroundColor = "white";
+    wordInputEl.style.borderColor = "black";
+    wordInputEl.style.color = "black";
+    wordInputEl.disabled = false;
+    root.style.setProperty("--after-background-color", afterColor);
+    
+    setTimeout(() => {
+        wordDivEl.querySelectorAll(".letter").forEach(element => {
+            element.style.userSelect = "none";
+            element.style.width = "3rem";
+            element.style.margin = "1rem 0.5rem";
+            element.style.fontSize = "3rem";  
+        })
+    }, 300);
+}
+
 // main 
     // keep input field focused
 document.addEventListener("keydown", () => {
@@ -315,6 +333,7 @@ wordInputEl.addEventListener('keydown', key => {
     // restart button
 restartBtnEl.addEventListener('click', () => {
     showMenu(true, 0);
+    timesEl.style.display = "block";
 })
 restartBtnEl.onmouseover = () => {
     restartBtnEl.style.transform = "rotateZ(180deg)"
@@ -323,8 +342,13 @@ restartBtnEl.onmouseleave = () => {
     restartBtnEl.style.transform = "rotateZ(0deg)";
 }
 
-// modify moveIn function
-// exit the menu button
+    // close menu
+timesEl.addEventListener("click", () => {
+    showMenu(false);
+    setTimeout(() => timesEl.style.display = "none", 500);
+})
+
+// add tooltip  
 // animation when a wrong answer is given
 // add a way to tell if you won or lost
 // add some animation to game end

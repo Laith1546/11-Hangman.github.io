@@ -165,6 +165,23 @@ body {
                 display: none;
             }
 
+            .fa-times {
+                display: none;
+                color: $low-color;
+                position: absolute;
+                bottom: 0.5rem;
+                right: 0.6rem;
+                transition: transform 300ms ease-out;
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+
+                &:active {
+                    transform: scale(0.8);
+                }
+            }
+
             .ribbon {
                 position: absolute;
                 width: 15rem;
@@ -178,7 +195,6 @@ body {
         }
     }
 }
-
 
 .upper-container {
     position: relative;
@@ -248,6 +264,7 @@ body {
         caret-color: transparent;
         outline: none;
         text-transform: uppercase;
+        opacity: 0;
         transition: border 200ms linear, color 300ms linear, background-color 300ms linear, opacity 300ms ease-out;
 
         &:focus {
@@ -286,7 +303,7 @@ body {
         font-size: 1.2rem;
         color: white;
         font-weight: bold;
-        transition: transform 300ms ease-out;
+        transition: opacity 300ms ease-out, transform 300ms ease-out;
     }
 
     .lives {

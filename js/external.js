@@ -1,4 +1,4 @@
-import { showMenu, gameWon } from "./main.js";
+import {showMenu, gameEnded} from "./main.js";
 
 const upperContainerEl = document.querySelector(".upper-container");
 const livesDiv = document.querySelector(".lives");
@@ -7,9 +7,7 @@ const showMenuDelay = 2100;
 
 export const giveRandomNoun = async () => {
     const jsonData = await fetch("https://random-word-form.herokuapp.com/random/noun");
-    // const jsonData = await fetch("https://random-words-api.vercel.app/word");
     const data = await jsonData.json();
-    // console.log(data[0]);
     return await data[0];
 }
 
@@ -17,7 +15,6 @@ export const giveRandomNoun = async () => {
 export const giveRandomAnimal = async () => {
     const jsonData = await fetch("https://random-word-form.herokuapp.com/random/animal");
     const data = await jsonData.json();
-    // console.log(data[0]);
     return await data[0];
 }
 
@@ -25,7 +22,6 @@ export const giveRandomPokemon = async () => {
     const num = Math.floor(Math.random() * 899);
     const jsonData = await fetch(`https://pokeapi.co/api/v2/pokemon/${num}`);
     const data = await jsonData.json();
-    // console.log(data.name);
     return await data.name;
 }
 
@@ -63,7 +59,7 @@ export let game = {
             game.currentLives = 0;
             livesDiv.textContent = `lives: 0`;
             setTimeout(() => game.hasStarted = 0, 50);
-            gameWon();
+            gameEnded();
             setTimeout(showMenu, showMenuDelay);
         } else {
             game.currentLives--;
@@ -76,7 +72,7 @@ export let game = {
         if(game.remainingLetters <= 0){
             game.remainingLetters = 0;
             setTimeout(() => game.hasStarted = 0, 50);
-            gameWon();
+            gameEnded();
             setTimeout(showMenu, showMenuDelay);
         }
     },

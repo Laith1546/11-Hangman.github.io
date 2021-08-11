@@ -1,5 +1,5 @@
 import {game} from "./external.js";
-import {chooseWord, newGame} from "./main.js";
+import {startGame} from "./main.js";
 
 // elements
 const gameTypeEl = document.querySelector(".game-type span");
@@ -8,7 +8,7 @@ const gameDiffEl = document.querySelector(".game-difficulty span");
 const gameDiffButtonEls = document.querySelectorAll(".game-difficulty button");
 const gameStartEl = document.querySelector(".menu > button");
 const loadingEl = document.querySelector(".loading");
-const menuEl = document.querySelector(".menu");
+const timesEl = document.querySelector(".fa-times");
 
 // main 
     // highlight selected elements
@@ -86,14 +86,14 @@ gameDiffEl.addEventListener('click', (e) => {
     // click start button 
 gameStartEl.addEventListener('click', () => {
     loadingEl.style.display = "inline-block";
-    chooseWord(game.type);
-    game.changeBackgroundColor(game.totalLives);
+    startGame();
+    setTimeout(() => timesEl.style.display = "none", 500);
 })
 
 document.onkeydown = (e) => {
     if(e.code === "Enter" && !game.hasStarted){
         loadingEl.style.display = "inline-block";
-        chooseWord(game.type);
-        game.changeBackgroundColor(game.totalLives);
+        startGame();
+        setTimeout(() => timesEl.style.display = "none", 500);
     }
 }
