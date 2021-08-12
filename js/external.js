@@ -3,7 +3,7 @@ import {showMenu, gameEnded} from "./main.js";
 const upperContainerEl = document.querySelector(".upper-container");
 const livesDiv = document.querySelector(".lives");
 
-const showMenuDelay = 2100;
+export let nextWord = ["-", false];
 
 export const giveRandomNoun = async () => {
     const jsonData = await fetch("https://random-word-form.herokuapp.com/random/noun");
@@ -25,6 +25,23 @@ export const giveRandomPokemon = async () => {
     return await data.name;
 }
 
+export const prepareNextWord = async () => {
+    const currentType = game.type;
+    switch(currentType){
+        case "noun":
+            nextWord[0] = await giveRandomNoun();
+            break;
+        case "animal":
+            nextWord[0] = await giveRandomAnimal();
+            break;
+        case "pokemon":
+            nextWord[0] = await giveRandomPokemon();
+            break;
+        default:
+            nextWord = await giveRandomPokemon();
+    }
+    nextWord[1] = true;
+}
 
 const generateBackgroundColors = (lives) => {
     const baseColor = [105, 60, 35];
@@ -52,15 +69,14 @@ export let game = {
     difficulty: 2,
     hasStarted: 0,
     remainingLetters: 0,
-    Type: "noun",
+    type: "noun",
     colors: generateBackgroundColors(12),
     decreaseLives: () => {
         if((game.currentLives-1) <= 0) {
             game.currentLives = 0;
             livesDiv.textContent = `lives: 0`;
-            setTimeout(() => game.hasStarted = 0, 50);
+            setTimeout(() => game.hasStarted = 0, 1000);
             gameEnded();
-            setTimeout(showMenu, showMenuDelay);
         } else {
             game.currentLives--;
             livesDiv.textContent = `lives: ${game.currentLives}`;
@@ -71,9 +87,8 @@ export let game = {
 
         if(game.remainingLetters <= 0){
             game.remainingLetters = 0;
-            setTimeout(() => game.hasStarted = 0, 50);
+            setTimeout(() => game.hasStarted = 0, 1000);
             gameEnded();
-            setTimeout(showMenu, showMenuDelay);
         }
     },
     changeDifficulty: (nr= 1) => {

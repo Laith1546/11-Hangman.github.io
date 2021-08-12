@@ -6,36 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <script type="module" defer src="./js/main.js"></script>
     <script type="module" defer src="./js/menu.js"></script>
     <title>Hangman</title>
 </head>
 <body>
+    <!-- <div class="divider-container"><div class="divider"></div></div> -->
     <div class="main-container">
-        <div class="overlay">
-            <div class="menu">
-                <div class="game-type">
-                    <label>Type: </label>
-                    <span>
-                        <button class="selected">Noun</button>
-                        <button>Animal</button>
-                        <button>Pokemon</button>
-                    </span>
-                </div>
-                <div class="game-difficulty">
-                    <label>Difficulty: </label>
-                    <span>
-                        <button>Easy</button>
-                        <button class="selected">Normal</button>
-                        <button>Hard</button>
-                    </span>
-                </div>
-                <button class="start-btn" >START <i class="fa fa-circle-o-notch fa-spin loading"></i></button>
-                <div class="ribbon"></div>   
-                <i class="fa fa-times"></i>
-            </div>
-        </div>
         <section class="upper-container">
+            <div class="overlay">
+                <div class="menu">
+                    <div class="game-type">
+                        <label>Type: </label>
+                        <span>
+                            <button class="selected">Noun</button>
+                            <button>Animal</button>
+                            <button>Pokemon</button>
+                        </span>
+                    </div>
+                    <div class="game-difficulty">
+                        <label>Difficulty: </label>
+                        <span>
+                            <button>Easy</button>
+                            <button class="selected">Normal</button>
+                            <button>Hard</button>
+                        </span>
+                    </div>
+                    <button class="start-btn" >START <i class="fa fa-circle-o-notch fa-spin loading"></i></button>
+                    <div class="ribbon"></div>   
+                    <i class="fa fa-times"></i>
+                </div>
+            </div>
             <i class="fa fa-refresh restart-btn"></i>
             <span class="word">
                 <!-- <div class="letter">
@@ -46,6 +48,11 @@
             <div class="answers-list"></div>
             <span class="lives"></span>
             <span class="description"></span>
+            <span class="lower-buttons">
+                <button>modify game</button>
+                <button style="height: 5.5rem;">quick restart</button>
+                <button>word info</button>
+            </span>
         </section>
         
         <section class="lower-container">

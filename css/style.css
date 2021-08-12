@@ -245,10 +245,11 @@ body::-webkit-scrollbar {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  -webkit-transition: -webkit-transform 500ms linear;
-  transition: -webkit-transform 500ms linear;
-  transition: transform 500ms linear;
-  transition: transform 500ms linear, -webkit-transform 500ms linear;
+  opacity: 0%;
+  -webkit-transition: opacity 300ms ease-out, -webkit-transform 500ms linear;
+  transition: opacity 300ms ease-out, -webkit-transform 500ms linear;
+  transition: transform 500ms linear, opacity 300ms ease-out;
+  transition: transform 500ms linear, opacity 300ms ease-out, -webkit-transform 500ms linear;
 }
 
 .upper-container .word {
@@ -362,8 +363,76 @@ body::-webkit-scrollbar {
   bottom: 3rem;
 }
 
+.upper-container .lower-buttons {
+  min-width: 70vw;
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  text-align: center;
+  display: none;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  -webkit-transition: opacity 300ms ease-out;
+  transition: opacity 300ms ease-out;
+}
+
+.upper-container .lower-buttons button {
+  min-width: 20vw;
+  padding: 1rem;
+  font-size: 2rem;
+  border-radius: 8px;
+  background-color: transparent;
+  text-transform: capitalize;
+  color: white;
+  border: white 4px solid;
+  margin: 0px 1rem;
+  -webkit-box-shadow: 1px 1px 6px black;
+          box-shadow: 1px 1px 6px black;
+  font-weight: bolder;
+  -webkit-transition: -webkit-box-shadow 200ms ease-out, -webkit-transform 300ms ease-out;
+  transition: -webkit-box-shadow 200ms ease-out, -webkit-transform 300ms ease-out;
+  transition: box-shadow 200ms ease-out, transform 300ms ease-out;
+  transition: box-shadow 200ms ease-out, transform 300ms ease-out, -webkit-box-shadow 200ms ease-out, -webkit-transform 300ms ease-out;
+}
+
+.upper-container .lower-buttons button:hover, .upper-container .lower-buttons button :focus {
+  -webkit-box-shadow: 1px 1px 15px black;
+          box-shadow: 1px 1px 15px black;
+}
+
+.upper-container .lower-buttons button:active {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
 .lower-container {
   background-color: red;
+}
+
+.divider-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 166, 0, 0.295);
+}
+
+.divider-container .divider {
+  z-index: inherit;
+  height: 100vh;
+  width: 10px;
+  background-color: black;
 }
 
 @-webkit-keyframes fade-in {

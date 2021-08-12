@@ -1,4 +1,4 @@
-import {giveRandomAnimal, giveRandomPokemon, giveRandomNoun, game} from './external.js';
+import {giveRandomAnimal, giveRandomPokemon, giveRandomNoun, game, prepareNextWord, nextWord} from './external.js';
 
 // elements 
 const root = document.querySelector(":root");
@@ -11,13 +11,15 @@ const restartBtnEl = document.querySelector(".restart-btn");
 const wordDescDiv = document.querySelector(".description");
 const livesDiv = document.querySelector(".lives");
 const timesEl = document.querySelector(".fa-times");
+const lowerButtons = document.querySelector(".lower-buttons");
 
 // variables
 const maxNumOfLetters = 12;
 let mainWord = "";
 let listOfAnswers = [];
-const afterColor = "yellow";
+const afterColor = "#B6E11E";
 const purplishColor = "#50178b";
+let mouseActive = true;
 
 // functions
 const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out") => {
@@ -111,9 +113,6 @@ const displayWord =  (word, show= false) => {
         
         tempDiv.textContent = word[i];
         tempDiv.style.color = "transparent";
-
-        // if(show) tempDiv.textContent = word[i];
-        // else tempDiv.textContent = " ";
         wordDivEl.appendChild(tempDiv);
     }
 }
@@ -181,23 +180,25 @@ export const showMenu = (show= true, delay= 300) => {
 }
 
 export const chooseWord = async (type) => {
-    // newGame();
-    do {
-        if(type === "noun"){
-            mainWord = await giveRandomNoun();
-            showMenu(false);
-        }
-        else if (type === "animal"){
-            mainWord = await giveRandomAnimal();
-            showMenu(false);
-        }
-        else if (type === "pokemon"){
-            mainWord = await giveRandomPokemon();
-            showMenu(false);
-        }
-    } while (mainWord.length > maxNumOfLetters || mainWord.includes(" "))
+    if(nextWord[1] === true){
+        mainWord = nextWord[0];
+        nextWord[1] = false;
+    } else {
+        do {
+            if(type === "noun"){
+                mainWord = await giveRandomNoun();
+            }
+            else if (type === "animal"){
+                mainWord = await giveRandomAnimal();
+            }
+            else if (type === "pokemon"){
+                mainWord = await giveRandomPokemon();
+            }
+        } while (mainWord.length > maxNumOfLetters || mainWord.includes(" "))
+    }
 
     displayWord(mainWord);
+    showMenu(false);
 
     game.remainingLetters = mainWord.length;
 
@@ -207,6 +208,12 @@ export const chooseWord = async (type) => {
             loadingEl.style.display = "none";
             wordInputEl.style.opacity = "100";
             wordInputEl.focus();
+
+            // restart button
+            restartBtnEl.style.opacity = "100";
+            setTimeout(() => {
+                restartBtnEl.style.display = "block";
+            }, 300);
 
             // description & lives and animation
             moveIn(livesDiv, "bottom", 300, 300);
@@ -218,11 +225,12 @@ export const chooseWord = async (type) => {
                 article = "an";
             if(mainWord.includes("-"))
                 wordLength--;
-            wordDescDiv.textContent = `${article} ${game.type} with ${wordLength} letters`;
+            wordDescDiv.textContent = `${article} ${game.type} with ${wordLength} letters.`;
             livesDiv.textContent = `lives: ${game.totalLives}`;
         })
 
     console.log(mainWord);
+    prepareNextWord();
 }
 
 export const gameEnded = () => {
@@ -233,6 +241,12 @@ export const gameEnded = () => {
     wordInputEl.style.opacity = "0";
     wordDescDiv.style.opacity = "0";
     livesDiv.style.opacity = "0";
+    // restart button
+    restartBtnEl.style.opacity = "0";
+    setTimeout(() => {
+        restartBtnEl.style.display = "none";
+    }, 300);
+    // text
     setTimeout(() => {
         wordDivEl.querySelectorAll(".letter").forEach(element => {
             element.style.userSelect = "text";
@@ -244,6 +258,15 @@ export const gameEnded = () => {
             }, 400);
         })
     }, 300);
+    // lower button
+    setTimeout(() => {
+        lowerButtons.style.opacity = "0%";
+        lowerButtons.style.display = "block";
+        moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 350);
+        moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 200);
+        moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 350);
+        setTimeout(() => lowerButtons.style.opacity = "100%", 100);
+    }, 1000)
 }
 
 const highlightAnswer = async () => {
@@ -289,20 +312,25 @@ const highlightAnswer = async () => {
 } 
 
 export const startGame = () => {
+    wordDivEl.innerHTML = " ";
     chooseWord(game.type);
     // setting variables
     game.hasStarted = 1;
     game.currentLives = game.totalLives;
     game.changeBackgroundColor(game.totalLives);
     clearList();
-    wordDivEl.innerHTML = " ";
     wordInputEl.value = "";
     wordInputEl.style.backgroundColor = "white";
     wordInputEl.style.borderColor = "black";
     wordInputEl.style.color = "black";
     wordInputEl.disabled = false;
     root.style.setProperty("--after-background-color", afterColor);
-    
+    // lower buttons
+    lowerButtons.style.opacity = "0%";
+    setTimeout(() => {
+        lowerButtons.style.display = "none";
+    }, 400);
+
     setTimeout(() => {
         wordDivEl.querySelectorAll(".letter").forEach(element => {
             element.style.userSelect = "none";
@@ -334,6 +362,7 @@ wordInputEl.addEventListener('keydown', key => {
 restartBtnEl.addEventListener('click', () => {
     showMenu(true, 0);
     timesEl.style.display = "block";
+    game.hasStarted = 0;
 })
 restartBtnEl.onmouseover = () => {
     restartBtnEl.style.transform = "rotateZ(180deg)"
@@ -342,16 +371,51 @@ restartBtnEl.onmouseleave = () => {
     restartBtnEl.style.transform = "rotateZ(0deg)";
 }
 
-    // close menu
+    // close menu button
 timesEl.addEventListener("click", () => {
     showMenu(false);
     setTimeout(() => timesEl.style.display = "none", 500);
+    game.hasStarted = 0;
 })
 
-// add tooltip  
-// animation when a wrong answer is given
+    // show/hide mouse cursor 
+window.addEventListener("mousemove", (e) => {
+    document.querySelector("html").style.cursor = "default";
+    mouseActive = true;
+})
+
+const hideMouseCursor = () => {
+    if(mouseActive) {
+        mouseActive = false;
+        setTimeout(hideMouseCursor, 1000);
+        return
+    } 
+
+    document.querySelector("html").style.cursor = "none";
+    setTimeout(hideMouseCursor, 1500);
+}
+setTimeout(hideMouseCursor, 1500);
+
+    // lower buttons functionality
+lowerButtons.querySelector("button:nth-child(1)").addEventListener("click", () => {
+    showMenu(true, 100);
+})
+lowerButtons.querySelector("button:nth-child(2)").addEventListener("click", () => {
+    startGame();
+})
+lowerButtons.querySelector("button:nth-child(3)").addEventListener("click", () => {
+    console.log("lower div");
+})
+    
+// hide restart button when game has ended
 // add a way to tell if you won or lost
+// replace "lives" with a heart svg
+// ** change ::after color 
+// user may replace "-" with a space
+// animation for wrong answers
+// animation when a wrong answer is given
 // add some animation to game end
 // about the word
 // slow/no internet message
 // error handling 
+// add tooltip  
