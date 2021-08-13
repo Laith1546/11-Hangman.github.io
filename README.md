@@ -1,3 +1,3 @@
 # Hangman.github.io
 
-A mordren game of Hangman
+A modren game of Hangman
