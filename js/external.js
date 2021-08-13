@@ -71,77 +71,67 @@ const generateBackgroundColors = (lives) => {
     return gradients;
 }
 
-// function prepareStates() {
-//     const colors = generateBackgroundColors(12);
-//     // console.log(colors);
-
-//     let colorShades = generateColorShades(colors[0][0], colors[0][1], colors[0][2]);
-//     // console.log(colorShades);
-
-//     let states = "{";
-//     states += `
-//         "default-state": {
-//             gradients: [
-//                 [${colorShades[0]}, ${colorShades[1]}],
-//                 [${colorShades[2]}, ${colorShades[0]}]
-//             ],
-//             transitionSpeed: 1500,
-//             loop: true
-//         },`
-
-//     for(let i = 0; i < colors.length; i++){
-//         colorShades = generateColorShades(colors[i][0], colors[i][1], colors[i][2]);
-
-//         states += `
-//             "state-${i+1}": {
-//                 gradients: [
-//                     [${colorShades[0]}, ${colorShades[1]}],
-//                     [${colorShades[2]}, ${colorShades[0]}]
-//                 ],
-//                 transitionSpeed: 1500,
-//                 loop: true
-//             },`
-//     }
-//     states = states.substring(0, states.length - 1);
-//     states += "}";
-//     console.log(states);
-//     return states;
-// }
-
 function prepareStates() {
-    const colors = generateBackgroundColors(12);
-    // console.log(colors);
-
+    const easyLives = 12;
+    const normalLives = 9;
+    const hardLives = 6;
+    let colors = generateBackgroundColors(easyLives);
     let colorShades = generateColorShades(colors[0][0], colors[0][1], colors[0][2]);
-    // console.log(colorShades);
+
     let tempObject;
-    
+    const delay = 5000;
     tempObject = {
-        gradient: [ [colorShades[0], colorShades[1]], [colorShades[2], colorShades[0]] ], 
-        transitionSpeed: 1500,
+        gradients: [ 
+            [colorShades[0], colorShades[1]], 
+            [colorShades[2], colorShades[0]] 
+        ], 
+        transitionSpeed: delay,
         loop: true
     };
 
-    let states = {
-        "default-state": tempObject
+    let states = {"default-state": tempObject};
+    
+    // easy
+    for(let i = 0; i < colors.length; i++){
+        colorShades = generateColorShades(colors[i][0], colors[i][1], colors[i][2]);
+        states[`easy-${i+1}`] = {
+            gradients: [ 
+                [colorShades[0], colorShades[1]], 
+                [colorShades[2], colorShades[0]] 
+            ], 
+            transitionSpeed: delay,
+            loop: true
+        }
     }
-    states["state-1"] = tempObject;
 
-    // for(let i = 0; i < colors.length; i++){
-    //     colorShades = generateColorShades(colors[i][0], colors[i][1], colors[i][2]);
+    // normal
+    colors = generateBackgroundColors(normalLives);
+    for(let i = 0; i < colors.length; i++){
+        colorShades = generateColorShades(colors[i][0], colors[i][1], colors[i][2]);
+        states[`normal-${i+1}`] = {
+            gradients: [ 
+                [colorShades[0], colorShades[1]], 
+                [colorShades[2], colorShades[0]] 
+            ], 
+            transitionSpeed: delay,
+            loop: true
+        }
+    }
 
-    //     states += `
-    //         "state-${i+1}": {
-    //             gradients: [
-    //                 [${colorShades[0]}, ${colorShades[1]}],
-    //                 [${colorShades[2]}, ${colorShades[0]}]
-    //             ],
-    //             transitionSpeed: 1500,
-    //             loop: true
-    //         },`
-    // }
-    // states = states.substring(0, states.length - 1);
-    // console.log(states);
+    // hard
+    colors = generateBackgroundColors(hardLives);
+    for(let i = 0; i < colors.length; i++){
+        colorShades = generateColorShades(colors[i][0], colors[i][1], colors[i][2]);
+        states[`hard-${i+1}`] = {
+            gradients: [ 
+                [colorShades[0], colorShades[1]], 
+                [colorShades[2], colorShades[0]] 
+            ], 
+            transitionSpeed: delay,
+            loop: true
+        }
+    }
+
     return states;
 }
 ////////////////////////////
@@ -150,19 +140,12 @@ let canvasGradient = new Granim({
     element: ".upper-canvas",
     direction: "diagonal",
     isPausedWhenNotInView: true,
-    states: {
-        "default-state": {
-            gradients: [ 
-                ["#942119", "#942119"],  
-                ["#942119", "#942119"] 
-            ],  
-        }
-    }
+    stateTransitionSpeed: 500,
+    states: prepareStates()
 });
 
-
 export let game = {
-    totalLives: 12,
+    totalLives: 9,
     currentLives: 12,
     difficulty: 2,
     hasStarted: 0,
@@ -189,7 +172,7 @@ export let game = {
             gameEnded();
         }
     },
-    changeDifficulty: (nr= 1) => {
+    changeDifficulty: (nr= 2) => {
         if(nr === 1 || nr < 1 || nr === "easy"){
             game.totalLives = 12;
             game.currentLives = game.totalLives;
@@ -209,17 +192,21 @@ export let game = {
     changeBackgroundColor: (nr) => {
         if(!(game.totalLives-nr < game.totalLives)) return;
 
-        // upperContainerEl.style.backgroundColor = 
-        // `hsl(${game.colors[game.totalLives-nr][0]}, 
-        //     ${game.colors[game.totalLives-nr][1]}%, 
-        //     ${game.colors[game.totalLives-nr][2]}%)`;
+        let currentDifficulty = "easy";
+        switch(game.difficulty){
+            case 1:
+                currentDifficulty = "easy";
+                break;
+            case 2:
+                currentDifficulty = "normal";
+                break;
+            case 3: 
+                currentDifficulty = "hard";
+                break;
+            default:
+                currentType = "easy";
+        }    
 
-        const gradientColor = generateColorShades(
-            game.colors[game.totalLives-nr][0],
-            game.colors[game.totalLives-nr][1],
-            game.colors[game.totalLives-nr][2]
-        )
-            
-        console.log(canvasGradient.states);
+        canvasGradient.changeState(`${currentDifficulty}-${game.totalLives-game.currentLives + 1}`)
     }
 }
