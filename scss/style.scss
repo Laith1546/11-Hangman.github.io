@@ -355,6 +355,17 @@ body {
             }
         }
     }
+
+    .upper-canvas {
+        // z-index: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        // background-color: black;
+        transition: background-color 10ms linear;
+    }
 }
 
 .lower-container {

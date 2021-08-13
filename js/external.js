@@ -2,15 +2,16 @@ import {showMenu, gameEnded} from "./main.js";
 
 const upperContainerEl = document.querySelector(".upper-container");
 const livesDiv = document.querySelector(".lives");
+// const upperCanvas = document.querySelector(".upper-canvas");
 
 export let nextWord = ["-", false, "noun"];
+
 
 export const giveRandomNoun = async () => {
     const jsonData = await fetch("https://random-word-form.herokuapp.com/random/noun");
     const data = await jsonData.json();
     return await data[0];
 }
-
 
 export const giveRandomAnimal = async () => {
     const jsonData = await fetch("https://random-word-form.herokuapp.com/random/animal");
@@ -44,6 +45,14 @@ export const prepareNextWord = async () => {
     nextWord[2] = game.type;
 }
 
+const generateColorShades = (...baseColor) => {
+    const gradientColor1 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2]}%)`;
+    const gradientColor2 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2] + 15}%)`;
+    const gradientColor3 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2] - 12}%)`;
+
+    return [gradientColor1, gradientColor2, gradientColor3];
+}
+
 const generateBackgroundColors = (lives) => {
     const baseColor = [105, 60, 35];
     const finalColor = [0, 82, 35];
@@ -62,6 +71,94 @@ const generateBackgroundColors = (lives) => {
     return gradients;
 }
 
+// function prepareStates() {
+//     const colors = generateBackgroundColors(12);
+//     // console.log(colors);
+
+//     let colorShades = generateColorShades(colors[0][0], colors[0][1], colors[0][2]);
+//     // console.log(colorShades);
+
+//     let states = "{";
+//     states += `
+//         "default-state": {
+//             gradients: [
+//                 [${colorShades[0]}, ${colorShades[1]}],
+//                 [${colorShades[2]}, ${colorShades[0]}]
+//             ],
+//             transitionSpeed: 1500,
+//             loop: true
+//         },`
+
+//     for(let i = 0; i < colors.length; i++){
+//         colorShades = generateColorShades(colors[i][0], colors[i][1], colors[i][2]);
+
+//         states += `
+//             "state-${i+1}": {
+//                 gradients: [
+//                     [${colorShades[0]}, ${colorShades[1]}],
+//                     [${colorShades[2]}, ${colorShades[0]}]
+//                 ],
+//                 transitionSpeed: 1500,
+//                 loop: true
+//             },`
+//     }
+//     states = states.substring(0, states.length - 1);
+//     states += "}";
+//     console.log(states);
+//     return states;
+// }
+
+function prepareStates() {
+    const colors = generateBackgroundColors(12);
+    // console.log(colors);
+
+    let colorShades = generateColorShades(colors[0][0], colors[0][1], colors[0][2]);
+    // console.log(colorShades);
+    let tempObject;
+    
+    tempObject = {
+        gradient: [ [colorShades[0], colorShades[1]], [colorShades[2], colorShades[0]] ], 
+        transitionSpeed: 1500,
+        loop: true
+    };
+
+    let states = {
+        "default-state": tempObject
+    }
+    states["state-1"] = tempObject;
+
+    // for(let i = 0; i < colors.length; i++){
+    //     colorShades = generateColorShades(colors[i][0], colors[i][1], colors[i][2]);
+
+    //     states += `
+    //         "state-${i+1}": {
+    //             gradients: [
+    //                 [${colorShades[0]}, ${colorShades[1]}],
+    //                 [${colorShades[2]}, ${colorShades[0]}]
+    //             ],
+    //             transitionSpeed: 1500,
+    //             loop: true
+    //         },`
+    // }
+    // states = states.substring(0, states.length - 1);
+    // console.log(states);
+    return states;
+}
+////////////////////////////
+
+let canvasGradient = new Granim({
+    element: ".upper-canvas",
+    direction: "diagonal",
+    isPausedWhenNotInView: true,
+    states: {
+        "default-state": {
+            gradients: [ 
+                ["#942119", "#942119"],  
+                ["#942119", "#942119"] 
+            ],  
+        }
+    }
+});
 
 
 export let game = {
@@ -112,10 +209,17 @@ export let game = {
     changeBackgroundColor: (nr) => {
         if(!(game.totalLives-nr < game.totalLives)) return;
 
-        upperContainerEl.style.backgroundColor = 
-        `hsl(${game.colors[game.totalLives-nr][0]}, 
-            ${game.colors[game.totalLives-nr][1]}%, 
-            ${game.colors[game.totalLives-nr][2]}%)`;
+        // upperContainerEl.style.backgroundColor = 
+        // `hsl(${game.colors[game.totalLives-nr][0]}, 
+        //     ${game.colors[game.totalLives-nr][1]}%, 
+        //     ${game.colors[game.totalLives-nr][2]}%)`;
+
+        const gradientColor = generateColorShades(
+            game.colors[game.totalLives-nr][0],
+            game.colors[game.totalLives-nr][1],
+            game.colors[game.totalLives-nr][2]
+        )
+            
+        console.log(canvasGradient.states);
     }
 }
-

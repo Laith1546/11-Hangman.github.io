@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../granim.js-2.0.0/docs/assets/css/scss/var.scss"
+    ],
+    "names": [],
+    "file": "var.css"
+}
