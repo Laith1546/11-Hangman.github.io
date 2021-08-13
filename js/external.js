@@ -3,7 +3,7 @@ import {showMenu, gameEnded} from "./main.js";
 const upperContainerEl = document.querySelector(".upper-container");
 const livesDiv = document.querySelector(".lives");
 
-export let nextWord = ["-", false];
+export let nextWord = ["-", false, "noun"];
 
 export const giveRandomNoun = async () => {
     const jsonData = await fetch("https://random-word-form.herokuapp.com/random/noun");
@@ -41,6 +41,7 @@ export const prepareNextWord = async () => {
             nextWord = await giveRandomPokemon();
     }
     nextWord[1] = true;
+    nextWord[2] = game.type;
 }
 
 const generateBackgroundColors = (lives) => {
@@ -79,7 +80,7 @@ export let game = {
             gameEnded();
         } else {
             game.currentLives--;
-            livesDiv.textContent = `lives: ${game.currentLives}`;
+            livesDiv.textContent = `${game.currentLives}`;
         }
     },
     decreaseLetters: () => {

@@ -10,6 +10,7 @@ const loadingEl = document.querySelector(".loading");
 const restartBtnEl = document.querySelector(".restart-btn");
 const wordDescDiv = document.querySelector(".description");
 const livesDiv = document.querySelector(".lives");
+const heartsDiv = document.querySelector(".fa-heart");
 const timesEl = document.querySelector(".fa-times");
 const lowerButtons = document.querySelector(".lower-buttons");
 
@@ -180,7 +181,7 @@ export const showMenu = (show= true, delay= 300) => {
 }
 
 export const chooseWord = async (type) => {
-    if(nextWord[1] === true){
+    if(nextWord[1] === true && nextWord[2] === game.type){
         mainWord = nextWord[0];
         nextWord[1] = false;
     } else {
@@ -217,6 +218,7 @@ export const chooseWord = async (type) => {
 
             // description & lives and animation
             moveIn(livesDiv, "bottom", 300, 300);
+            moveIn(heartsDiv, "bottom", 300, 300);
             moveIn(wordDescDiv, "bottom", 300, 100);
 
             let article = "a";
@@ -226,7 +228,8 @@ export const chooseWord = async (type) => {
             if(mainWord.includes("-"))
                 wordLength--;
             wordDescDiv.textContent = `${article} ${game.type} with ${wordLength} letters.`;
-            livesDiv.textContent = `lives: ${game.totalLives}`;
+            // livesDiv.textContent = `lives: ${game.totalLives}`;
+            livesDiv.textContent = `${game.totalLives}`;
         })
 
     console.log(mainWord);
@@ -241,6 +244,8 @@ export const gameEnded = () => {
     wordInputEl.style.opacity = "0";
     wordDescDiv.style.opacity = "0";
     livesDiv.style.opacity = "0";
+    heartsDiv.style.opacity = "0";
+
     // restart button
     restartBtnEl.style.opacity = "0";
     setTimeout(() => {
@@ -353,6 +358,7 @@ wordInputEl.addEventListener('keydown', key => {
     setTimeout(highlightAnswer, 10);
 
     if(key.code === "Enter" && wordInputEl.value !== ""){
+        if(wordInputEl.value.includes(" ")) wordInputEl.value = wordInputEl.value.replace(" ", "-");
         checkWord(wordInputEl.value);
         wordInputEl.value = "";
     }   
@@ -407,14 +413,11 @@ lowerButtons.querySelector("button:nth-child(3)").addEventListener("click", () =
     console.log("lower div");
 })
     
-// hide restart button when game has ended
+    
 // add a way to tell if you won or lost
-// replace "lives" with a heart svg
 // ** change ::after color 
-// user may replace "-" with a space
 // animation for wrong answers
 // animation when a wrong answer is given
-// add some animation to game end
 // about the word
 // slow/no internet message
 // error handling 

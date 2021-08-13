@@ -342,11 +342,10 @@ body::-webkit-scrollbar {
   transition: text-shadow 300ms linear, color 300ms linear, margin 300ms ease-out;
 }
 
-.upper-container .description, .upper-container .lives {
+.upper-container .description, .upper-container .fa-heart, .upper-container .lives {
   z-index: inherit;
   position: absolute;
   height: 2rem;
-  min-width: 3rem;
   bottom: 1rem;
   right: 1rem;
   text-transform: capitalize;
@@ -359,8 +358,15 @@ body::-webkit-scrollbar {
   transition: opacity 300ms ease-out, transform 300ms ease-out, -webkit-transform 300ms ease-out;
 }
 
-.upper-container .lives {
+.upper-container .fa-heart, .upper-container .lives {
+  width: auto;
   bottom: 3rem;
+  opacity: 0;
+}
+
+.upper-container .lives {
+  width: auto;
+  right: 2.6rem;
 }
 
 .upper-container .lower-buttons {

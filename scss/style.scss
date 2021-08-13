@@ -298,7 +298,7 @@ body {
         z-index: inherit;
         position: absolute;
         height: 2rem;
-        min-width: 3rem;
+        // min-width: 3rem;
         bottom: 1rem;
         right: 1rem;
         text-transform: capitalize;
@@ -308,9 +308,17 @@ body {
         transition: opacity 300ms ease-out, transform 300ms ease-out;
     }
 
-    .lives {
+    .fa-heart {
         @extend .description;
+        width: auto;
         bottom: 3rem;
+        opacity: 0;
+    }
+    
+    .lives {
+        @extend .fa-heart;
+        width: auto;
+        right: 2.6rem;
     }
 
     .lower-buttons {
