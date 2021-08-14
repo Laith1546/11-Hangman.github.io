@@ -1,5 +1,5 @@
 # Hangman.github.io
 
-A modren game of Hangman
+A modern game of Hangman
 
 *Under the terms of the GNU GPL v3.
