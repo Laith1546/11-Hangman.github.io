@@ -47,7 +47,7 @@ export const prepareNextWord = async () => {
 
 const generateColorShades = (...baseColor) => {
     const gradientColor1 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2]}%)`;
-    const gradientColor2 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2] + 15}%)`;
+    const gradientColor2 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2] + 20}%)`;
     const gradientColor3 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2] - 10}%)`;
 
     return [gradientColor1, gradientColor2, gradientColor3];
@@ -138,10 +138,11 @@ function prepareStates() {
 // gradients
 let canvasGradient = new Granim({
     element: ".upper-canvas",
+    // direction: "radial",
     direction: "diagonal",
     isPausedWhenNotInView: true,
     stateTransitionSpeed: 500,
-    states: prepareStates()
+    states: prepareStates(),
 });
 
 export let game = {
@@ -207,6 +208,30 @@ export let game = {
                 currentType = "easy";
         }    
 
-        canvasGradient.changeState(`${currentDifficulty}-${game.totalLives-game.currentLives + 1}`)
+        canvasGradient.changeState(`${currentDifficulty}-${game.totalLives-game.currentLives + 1}`);
     }
 }
+
+const lowerGradient = new Granim({
+    element: ".lower-canvas",
+    direction: "diagonal",
+    isPausedWhenNotInView: true,
+    states: {
+        "default-state": {
+            gradients: [
+                ["hsl(269, 72%, 32%)", "hsl(284, 72%, 32%)"],
+                ["hsl(299, 72%, 32%)", "hsl(254, 72%, 32%)"],
+
+            ],
+            transitionSpeed: 1200,
+            loop: true
+        }
+    }
+});
+
+new fullpage(".main-container", {
+    autoScrolling:true,
+	scrollHorizontally: true,
+    scrollingSpeed: 500,
+    continuousVertical: true,
+})

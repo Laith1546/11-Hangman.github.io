@@ -8,37 +8,20 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  scroll-behavior: smooth;
 }
 
 body {
   height: 100vh;
   background-color: #f1faee;
   overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-body::-webkit-scrollbar {
-  display: none;
 }
 
 .main-container {
   height: 100vh;
-  overflow-y: scroll;
-  -ms-scroll-snap-type: y mandatory;
-      scroll-snap-type: y mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.main-container::-webkit-scrollbar {
-  display: none;
 }
 
 .main-container section {
   height: 100vh;
-  scroll-snap-align: start;
-  position: relative;
 }
 
 .main-container .overlay {
@@ -417,12 +400,27 @@ body::-webkit-scrollbar {
   left: 0;
   height: 100vh;
   width: 100vw;
-  -webkit-transition: background-color 10ms linear;
-  transition: background-color 10ms linear;
 }
 
 .lower-container {
-  background-color: red;
+  position: relative;
+  background-color: transparent;
+}
+
+.lower-container .lower-canvas {
+  height: 100%;
+  width: 100%;
+}
+
+.lower-container .content {
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  border: white 6px dashed;
 }
 
 .divider-container {

@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css">
-
+    <link rel="stylesheet" href="./node_modules/fullpage.js/dist/fullpage.min.css">
+    
+    <script src="./node_modules/fullpage.js/dist/fullpage.extensions.min.js"></script>
     <script src="./granim.js-2.0.0/dist/granim.js"></script>
     <script type="module" defer src="./js/main.js"></script>
     <script type="module" defer src="./js/menu.js"></script>
@@ -16,7 +18,7 @@
 <body>
     <!-- <div class="divider-container"><div class="divider"></div></div> -->
     <div class="main-container">
-        <section class="upper-container">
+        <section class="upper-container section">
             <canvas class="upper-canvas"></canvas>
             <div class="overlay">
                 <div class="menu">
@@ -59,7 +61,9 @@
             </span>
         </section>
         
-        <section class="lower-container">
+        <section class="lower-container section">
+            <canvas class="lower-canvas"></canvas>
+            <div class="content"></div>
         </section>
         
     </div>

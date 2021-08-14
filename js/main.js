@@ -414,7 +414,7 @@ lowerButtons.querySelector("button:nth-child(3)").addEventListener("click", () =
     console.log("lower div");
 })
     
-    
+
 // add a way to tell if you won or lost
 // animation for wrong answers
 // about the word
