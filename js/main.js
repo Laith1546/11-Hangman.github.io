@@ -18,7 +18,8 @@ const lowerButtons = document.querySelector(".lower-buttons");
 const maxNumOfLetters = 12;
 let mainWord = "";
 let listOfAnswers = [];
-const afterColor = "#B6E11E";
+// const afterColor = "#B6E11E";
+const afterColor = "white";
 const purplishColor = "#50178b";
 let mouseActive = true;
 
@@ -415,10 +416,10 @@ lowerButtons.querySelector("button:nth-child(3)").addEventListener("click", () =
     
     
 // add a way to tell if you won or lost
-// ** change ::after color 
 // animation for wrong answers
-// animation when a wrong answer is given
 // about the word
 // slow/no internet message
 // error handling 
 // add tooltip  
+// ** change ::after color 
+// animation when a wrong answer is given

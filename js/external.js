@@ -48,7 +48,7 @@ export const prepareNextWord = async () => {
 const generateColorShades = (...baseColor) => {
     const gradientColor1 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2]}%)`;
     const gradientColor2 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2] + 15}%)`;
-    const gradientColor3 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2] - 12}%)`;
+    const gradientColor3 = `hsl(${parseInt(baseColor[0])}, ${parseInt(baseColor[1])}%, ${baseColor[2] - 10}%)`;
 
     return [gradientColor1, gradientColor2, gradientColor3];
 }
@@ -134,8 +134,8 @@ function prepareStates() {
 
     return states;
 }
-////////////////////////////
 
+// gradients
 let canvasGradient = new Granim({
     element: ".upper-canvas",
     direction: "diagonal",
