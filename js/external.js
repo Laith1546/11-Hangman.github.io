@@ -229,9 +229,9 @@ const lowerGradient = new Granim({
     }
 });
 
-new fullpage(".main-container", {
-    autoScrolling:true,
-	scrollHorizontally: true,
-    scrollingSpeed: 500,
-    continuousVertical: true,
-})
+// new fullpage(".main-container", {
+//     autoScrolling:true,
+// 	scrollHorizontally: true,
+//     scrollingSpeed: 500,
+//     continuousVertical: true,
+// })
