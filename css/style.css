@@ -16,6 +16,82 @@ body {
   overflow-x: hidden;
 }
 
+.window {
+  position: fixed;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  z-index: 7;
+}
+
+.welcome {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  z-index: 6;
+  -webkit-transition: opacity 400ms ease-out;
+  transition: opacity 400ms ease-out;
+}
+
+.welcome .green-slide {
+  height: 100vh;
+  width: 100vw;
+  background-color: #3e8f24;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-transition: -webkit-transform 400ms ease-in;
+  transition: -webkit-transform 400ms ease-in;
+  transition: transform 400ms ease-in;
+  transition: transform 400ms ease-in, -webkit-transform 400ms ease-in;
+}
+
+.welcome .green-slide .title {
+  color: white;
+  font-weight: bolder;
+  font-size: 5rem;
+  border: white 5px dashed;
+  padding: 1rem;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.welcome .green-slide .load {
+  color: white;
+  font-size: 3rem;
+  margin-top: 3rem;
+}
+
+.warning {
+  z-index: 5;
+  position: absolute;
+  top: 1rem;
+  left: 3rem;
+  right: 3rem;
+  color: #ba1212;
+  font-size: 2rem;
+  text-align: center;
+  text-transform: capitalize;
+  opacity: 0;
+  -webkit-transition: opacity 300ms ease-out, -webkit-transform 300ms ease-out;
+  transition: opacity 300ms ease-out, -webkit-transform 300ms ease-out;
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
+  transition: transform 300ms ease-out, opacity 300ms ease-out, -webkit-transform 300ms ease-out;
+}
+
 .main-container {
   height: 100vh;
 }
@@ -374,7 +450,7 @@ body {
   text-transform: capitalize;
   color: white;
   border: white 4px solid;
-  margin: 0px 1rem;
+  margin: 3px 1rem;
   -webkit-box-shadow: 1px 1px 6px black;
           box-shadow: 1px 1px 6px black;
   font-weight: bolder;
@@ -463,6 +539,34 @@ body {
 .lower-container .email .email-link {
   color: white;
   text-decoration: underline;
+  cursor: pointer;
+}
+
+.lower-container .email div {
+  position: absolute;
+  top: -200%;
+  right: 0.5rem;
+  color: #383838;
+  background-color: white;
+  border-radius: 8px;
+  padding: 0.4rem;
+  opacity: 0;
+  -webkit-transition: opacity 100ms linear;
+  transition: opacity 100ms linear;
+}
+
+.lower-container .email div::after {
+  content: "";
+  z-index: -1;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  position: absolute;
+  bottom: -8px;
+  right: 1rem;
+  border-radius: 3px;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
 }
 
 .divider-container {
@@ -491,91 +595,13 @@ body {
   background-color: black;
 }
 
-@-webkit-keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 100;
-  }
+.white-outline {
+  text-shadow: 1px 1px 0px white, -1px 1px 0px white, 1px -1px 0px white, -1px -1px 0px white;
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 100;
-  }
-}
-
-@-webkit-keyframes fade-out {
-  from {
-    opacity: 100;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes fade-out {
-  from {
-    opacity: 100;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@-webkit-keyframes drop-down {
-  from {
-    opacity: 100;
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    -webkit-transform: translateY(150%);
-            transform: translateY(150%);
-  }
-}
-
-@keyframes drop-down {
-  from {
-    opacity: 100;
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    -webkit-transform: translateY(150%);
-            transform: translateY(150%);
-  }
-}
-
-@-webkit-keyframes show-up {
-  from {
-    opacity: 0;
-    -webkit-transform: translateY(150%);
-            transform: translateY(150%);
-  }
-  to {
-    opacity: 100;
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-  }
-}
-
-@keyframes show-up {
-  from {
-    opacity: 0;
-    -webkit-transform: translateY(150%);
-            transform: translateY(150%);
-  }
-  to {
-    opacity: 100;
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
+@media all and (max-width: 750px) {
+  .logo-container {
+    padding: 10rem !important;
   }
 }
 /*# sourceMappingURL=style.css.map */

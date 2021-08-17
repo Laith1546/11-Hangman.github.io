@@ -15,16 +15,16 @@ const timesEl = document.querySelector(".fa-times");
 const lowerButtons = document.querySelector(".lower-buttons");
 
 // variables
-const maxNumOfLetters = 12;
-let mainWord = "";
+const maxNumOfLetters = 10;
+export let mainWord = "";
 let listOfAnswers = [];
-// const afterColor = "#B6E11E";
 const afterColor = "white";
 const purplishColor = "#50178b";
 let mouseActive = true;
+const missingLetter = "hsl(0, 82%, 40%)";
 
 // functions
-const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out") => {
+export const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out") => {
     speed /= 1000;
 
     const property = ["transform", "-webkit-transform"];
@@ -42,7 +42,6 @@ const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out"
             element.style.transition = elemTrans;
         }
     }
-    // element.style.opacity = "0";
     setTransition(0, method);
     const pos = element.getBoundingClientRect();
 
@@ -53,7 +52,6 @@ const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out"
             `translateY(${window.innerHeight - pos.bottom + parseInt(elemHeight)}px)`;
 
         setTimeout(() => {
-            // element.style.transition = `transform ${speed}s ease-out`;
             setTransition(speed);
             element.style.transform = `translateY(0%)`;
         }, delay)
@@ -65,7 +63,6 @@ const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out"
             `translateY(-${window.innerHeight + pos.top + parseInt(elemHeight)}px)`;
 
         setTimeout(() => {
-            // element.style.transition = `transform ${speed}s ease-out`;
             setTransition(speed);
             element.style.transform = `translateY(0%)`;
         }, delay)
@@ -77,7 +74,6 @@ const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out"
             `translateX(-${window.innerWidth + pos.left + parseInt(elemWidth)}px)`;
 
         setTimeout(() => {
-            // element.style.transition = `transform ${speed}s ease-out`;
             setTransition(speed);
             element.style.transform = `translateX(0%)`;
         }, delay)
@@ -89,7 +85,6 @@ const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out"
             `translateX(${window.innerWidth + pos.right + parseInt(elemWidth)}px)`;
 
         setTimeout(() => {
-            // element.style.transition = `transform ${speed}s ease-out`;
             setTransition(speed);
             element.style.transform = `translateX(0%)`;
         }, delay)
@@ -104,7 +99,11 @@ const displayWord =  (word, show= false) => {
         
         for (let i = 0; i < word.length; i++){
             letters[i].textContent = word[i];
-            letters[i].style.color = "white";
+
+            if(getComputedStyle(letters[i]).color === "rgba(0, 0, 0, 0)" && game.remainingLetters !== 0) {
+                letters[i].style.color = missingLetter;
+                letters[i].classList.add("white-outline");
+            } else letters[i].style.color = "white";
         }
         return;
     }
@@ -268,9 +267,26 @@ export const gameEnded = () => {
     setTimeout(() => {
         lowerButtons.style.opacity = "0%";
         lowerButtons.style.display = "block";
-        moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 350);
-        moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 200);
-        moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 350);
+
+        console.log(window.innerWidth);
+        if(window.innerWidth >= 1163){
+            moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 350);
+            moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 200);
+            moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 350);
+        } else if(window.innerWidth < 1163 && window.innerWidth > 778){
+            moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 400);
+            moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 400);
+            moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 200);
+        } else if(window.innerWidth < 778 && window.innerWidth > 691){
+            moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 400);
+            moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 200);
+            moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 200);
+        } else if(window.innerWidth <= 691){
+            moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 600);
+            moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 400);
+            moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 200);
+        } 
+
         setTimeout(() => lowerButtons.style.opacity = "100%", 100);
     }, 1000)
 }
@@ -348,6 +364,25 @@ export const startGame = () => {
 }
 
 // main 
+    // scroll to the top
+window.scrollTo({ top: 0, behavior: 'smooth' });
+ 
+    // welcome slide
+const welcomeSlideEl = document.querySelector(".green-slide");
+const slideSpeed = 600;
+moveIn(welcomeSlideEl, "top", slideSpeed, 0);
+document.body.style.overflowY = "hidden";
+setTimeout(() => {
+    document.querySelector(".welcome").style.backgroundColor = "transparent";
+    welcomeSlideEl.style.transform = "translateY(150%)";
+    document.body.style.overflowY = "scroll";
+
+    setTimeout(() => {
+        document.querySelector(".welcome").style.opacity = "0";
+        document.querySelector(".welcome").style.display = "none";
+    }, 500);
+}, slideSpeed * 2.5);
+
     // keep input field focused
 document.addEventListener("keydown", () => {
     if(game.hasStarted)
@@ -411,14 +446,80 @@ lowerButtons.querySelector("button:nth-child(2)").addEventListener("click", () =
     startGame();
 })
 lowerButtons.querySelector("button:nth-child(3)").addEventListener("click", () => {
-    window.open(`https://www.google.com/search?q=${mainWord}`);
+    if(game.type === "pokemon"){
+        window.open(`https://bulbapedia.bulbagarden.net/wiki/${mainWord}_(Pok%C3%A9mon)`);
+    } else window.open(`https://www.google.com/search?q=${mainWord}`);
+})
+
+    // copy email 
+document.querySelector(".email-link").addEventListener('click', () => {
+    navigator.clipboard.writeText(document.querySelector(".email-link").textContent);
+    const bubble = document.querySelector(".email div");
+    bubble.style.opacity = "1";
+    setTimeout(() => {
+        bubble.style.opacity = "0";
+    }, 2000)
 })
     
+    // window resizing 
+const adjustScreen = () => {
+    if(window.innerWidth >= 1100){
+        document.querySelector(".game-difficulty label").textContent = "Difficulty:";
+
+        document.querySelector(".game-type span button:nth-child(1)").textContent =  "Noun";
+        document.querySelector(".game-type span button:nth-child(2)").textContent =  "Animal";
+        document.querySelector(".game-type span button:nth-child(3)").textContent =  "Pokemon";
+
+        document.querySelector(".game-difficulty span button:nth-child(1)").textContent =  "Easy";
+        document.querySelector(".game-difficulty span button:nth-child(2)").textContent =  "Normal";
+        document.querySelector(".game-difficulty span button:nth-child(3)").textContent =  "Hard";
+
+    } else if(window.innerWidth < 1100 && window.innerWidth > 900){
+        document.querySelector(".game-difficulty label").textContent = "Diff:";
+
+        document.querySelector(".game-type span button:nth-child(1)").textContent =  "Noun";
+        document.querySelector(".game-type span button:nth-child(2)").textContent =  "Animal";
+        document.querySelector(".game-type span button:nth-child(3)").textContent =  "Pokemon";
+
+        document.querySelector(".game-difficulty span button:nth-child(1)").textContent =  "Easy";
+        document.querySelector(".game-difficulty span button:nth-child(2)").textContent =  "Normal";
+        document.querySelector(".game-difficulty span button:nth-child(3)").textContent =  "Hard";
+
+        document.querySelectorAll(".game-type span button").forEach(element => {
+            element.textContent = element.textContent.substring(0 , 4);
+        })
+
+        document.querySelectorAll(".game-difficulty span button").forEach(element => {
+            element.textContent = element.textContent.substring(0 , 4);
+        })
+
+    } else if (window.innerWidth <= 900){
+        document.querySelector(".game-difficulty label").textContent = "Diff:";
+
+        document.querySelectorAll(".game-type span button").forEach(element => {
+            element.textContent = element.textContent.substring(0 , 2) + ".";
+        })
+
+        document.querySelectorAll(".game-difficulty span button").forEach(element => {
+            element.textContent = element.textContent.substring(0 , 2) + ".";
+        })
+    }
+};
+
+adjustScreen();
+window.addEventListener("resize", () => {
+    console.log(window.innerWidth);
+    adjustScreen();
+    document.querySelector(".window").textContent = window.innerWidth;
+})
+
+// add tooltip  
+// phone sizing 
 // webpack
 // babel
-// add a way to tell if you won or lost
+// google analytics 
+// key words / tags
+
 // animation for wrong answers
-// slow/no internet message
-// error handling 
-// add tooltip  
 // animation when a wrong answer is given
+// add a way to tell if you won or lost

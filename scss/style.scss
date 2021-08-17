@@ -4,7 +4,7 @@ $mid-color: hsl(60, 100%, 32%);
 $low-color: hsl(2, 100%, 32%);
 $extra-color: #50178b;
 $quick-buttons-color: #47157c;
-
+$missing-letter: hsl(0, 82%, 40%);
 
 :root {
     --after-background-color: yellow;
@@ -30,29 +30,75 @@ body {
     height: 100vh;
     background-color: #f1faee;
     overflow-x: hidden;
-    // overflow-y: hidden;
+}
 
-    // &::-webkit-scrollbar {
-    //     display: none;
-    // }
+.window {
+    position: fixed;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: white;
+    color: black;
+    padding: 1rem;
+    z-index: 7;
+}
+
+.welcome {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    z-index: 6;
+    transition:  opacity 400ms ease-out;
+
+    .green-slide {
+        height: 100vh;
+        width: 100vw;
+        background-color: $top-color;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        transition: transform 400ms ease-in;
+        
+        .title {
+            color: white;
+            font-weight: bolder;
+            font-size: 5rem;
+            border: white 5px dashed;
+            padding: 1rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .load {
+            color: white;
+            font-size: 3rem;
+            margin-top: 3rem;
+        }
+    }
+}
+
+.warning {
+    z-index: 5;
+    position: absolute;
+    top: 1rem;
+    left: 3rem;
+    right: 3rem;
+    color: $missing-letter;
+    // color: white;
+    font-size: 2rem;
+    text-align: center;
+    text-transform: capitalize;
+    opacity: 0;
+    transition: transform 300ms ease-out, opacity 300ms ease-out;
 }
 
 .main-container {
     height: 100vh;
-    // overflow-y: scroll;   
-    // scroll-snap-type: y mandatory;
-    // -ms-overflow-style: none;
-    // scrollbar-width: none;
 
-    // &::-webkit-scrollbar {
-    //     display: none;
-    // }
 
     section {
         height: 100vh;
-        // scroll-snap-align: start;
-        // position: relative;
-
     }
 
     .overlay {
@@ -84,7 +130,6 @@ body {
             padding: 1rem;
             overflow: hidden;
             user-select: none;
-            // animation: show-up 500ms ease-out;
             transition: transform 300ms ease-out, opacity 400ms ease-out;
 
             label, button {
@@ -340,7 +385,7 @@ body {
             text-transform: capitalize;
             color: white;
             border: white 4px solid;
-            margin: 0px 1rem;
+            margin: 3px 1rem;
             box-shadow: 1px 1px 6px black;
             font-weight: bolder;
             transition: box-shadow 200ms ease-out, transform 300ms ease-out;
@@ -389,16 +434,6 @@ body {
         position: absolute;
         inset: 0;
         padding: 15rem;
-
-        // &::before {
-        //     content: "Made By:";
-        //     position: absolute;
-        //     top: 1rem;
-        //     left: 1rem;
-        //     color: white;
-        //     font-weight: bold;
-        //     font-size: 1.5rem;
-        // }
         .logo {
             fill: white;
         }
@@ -433,6 +468,32 @@ body {
         .email-link {
             color: white;
             text-decoration: underline;
+            cursor: pointer;
+        }
+
+        div {
+            position: absolute;
+            top: -200%;
+            right: 0.5rem;
+            color:  rgb(56, 56, 56);
+            background-color: white;
+            border-radius: 8px;
+            padding: 0.4rem;
+            opacity: 0;
+            transition: opacity 100ms linear;
+            
+            &::after {
+                content: "";
+                z-index: -1;
+                width: 20px;
+                height: 20px;
+                background-color: white;
+                position: absolute;
+                bottom: -8px;
+                right: 1rem;
+                border-radius: 3px;
+                transform: rotate(45deg);
+            }
         }
     }
 }
@@ -457,37 +518,17 @@ body {
     }
 }
 
-
-@keyframes fade-in {
-    from {opacity: 0;}
-    to {opacity: 100;}
+.white-outline {
+    text-shadow: 
+        1px 1px 0px white,
+        -1px 1px 0px white,
+        1px -1px 0px white,
+        -1px -1px 0px white;
 }
 
-@keyframes fade-out {
-    from {opacity: 100;}
-    to {opacity: 0;}
-}
+@media all and (max-width: 750px) {
 
-@keyframes drop-down {
-    from { 
-        opacity: 100;
-        transform: translateY(0);
-    }
-
-    to { 
-        opacity: 0;
-        transform: translateY(150%);
-    }
-}
-
-@keyframes show-up {
-    from { 
-        opacity: 0;
-        transform: translateY(150%);
-    }
-
-    to { 
-        opacity: 100;
-        transform: translateY(0);
+    .logo-container {
+        padding: 10rem !important;
     }
 }

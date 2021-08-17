@@ -1,4 +1,4 @@
-import {showMenu, gameEnded} from "./main.js";
+import {moveIn, gameEnded, mainWord} from "./main.js";
 
 const upperContainerEl = document.querySelector(".upper-container");
 const livesDiv = document.querySelector(".lives");
@@ -8,25 +8,42 @@ export let nextWord = ["-", false, "noun"];
 
 
 export const giveRandomNoun = async () => {
-    const jsonData = await fetch("https://random-word-form.herokuapp.com/random/noun");
-    const data = await jsonData.json();
-    return await data[0];
+    try {
+        const jsonData = await fetch("https://random-word-form.herokuapp.com/random/noun");
+        const data = await jsonData.json();
+        return await data[0];
+    } catch (error) {
+        console.log(error);
+        moveIn(document.querySelector(".warning"), 300);
+    }
 }
 
 export const giveRandomAnimal = async () => {
-    const jsonData = await fetch("https://random-word-form.herokuapp.com/random/animal");
-    const data = await jsonData.json();
-    return await data[0];
+    try {
+        const jsonData = await fetch("https://random-word-form.herokuapp.com/random/animal");
+        const data = await jsonData.json();
+        return await data[0];
+    } catch (error) {
+        console.log(error);
+        moveIn(document.querySelector(".warning"), 300);
+    }
 }
 
 export const giveRandomPokemon = async () => {
+    
     const num = Math.floor(Math.random() * 899);
-    const jsonData = await fetch(`https://pokeapi.co/api/v2/pokemon/${num}`);
-    const data = await jsonData.json();
-    return await data.name;
+    try {
+        const jsonData = await fetch(`https://pokeapi.co/api/v2/pokemon/${num}`);
+        const data = await jsonData.json();
+        return await data.name;
+    } catch (error) {
+        console.log(error);
+        moveIn(document.querySelector(".warning"), 300);
+    }
 }
 
 export const prepareNextWord = async () => {
+    if(mainWord.length < 1) return;
     const currentType = game.type;
     switch(currentType){
         case "noun":
@@ -135,15 +152,6 @@ function prepareStates() {
     return states;
 }
 
-// gradients
-let canvasGradient = new Granim({
-    element: ".upper-canvas",
-    // direction: "radial",
-    direction: "diagonal",
-    isPausedWhenNotInView: true,
-    stateTransitionSpeed: 500,
-    states: prepareStates(),
-});
 
 export let game = {
     totalLives: 9,
@@ -156,7 +164,7 @@ export let game = {
     decreaseLives: () => {
         if((game.currentLives-1) <= 0) {
             game.currentLives = 0;
-            livesDiv.textContent = `lives: 0`;
+            // livesDiv.textContent = `lives: 0`;
             setTimeout(() => game.hasStarted = 0, 1000);
             gameEnded();
         } else {
@@ -212,6 +220,17 @@ export let game = {
     }
 }
 
+// gradients
+let canvasGradient = new Granim({
+    element: ".upper-canvas",
+    // direction: "radial",
+    direction: "diagonal",
+    isPausedWhenNotInView: true,
+    stateTransitionSpeed: 500,
+    states: prepareStates(),
+});
+
+
 const lowerGradient = new Granim({
     element: ".lower-canvas",
     direction: "diagonal",
@@ -219,11 +238,11 @@ const lowerGradient = new Granim({
     states: {
         "default-state": {
             gradients: [
-                ["hsl(269, 72%, 32%)", "hsl(284, 72%, 32%)"],
-                ["hsl(299, 72%, 32%)", "hsl(254, 72%, 32%)"],
+                ["hsl(269, 72%, 50%)", "hsl(284, 72%, 32%)"],
+                ["hsl(299, 72%, 32%)", "hsl(254, 72%, 50%)"],
 
             ],
-            transitionSpeed: 1200,
+            transitionSpeed: 800,
             loop: true
         }
     }

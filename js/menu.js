@@ -85,15 +85,21 @@ gameDiffEl.addEventListener('click', (e) => {
 
     // click start button 
 gameStartEl.addEventListener('click', () => {
+    gameStartEl.disabled = true;
     loadingEl.style.display = "inline-block";
     startGame();
     setTimeout(() => timesEl.style.display = "none", 500);
+
+    setTimeout(() => gameStartEl.disabled = false, 2000)
 })
 
 document.onkeydown = (e) => {
     if(e.code === "Enter" && !game.hasStarted){
+        gameStartEl.disabled = true;
         loadingEl.style.display = "inline-block";
         startGame();
         setTimeout(() => timesEl.style.display = "none", 500);
+
+        setTimeout(() => gameStartEl.disabled = false, 2000)
     }
 }
