@@ -375,13 +375,65 @@ body {
 
     .content{
         z-index: 5;
-        height: 100%;
+        height: 99.5%;
         width: 100%;
         position: absolute;
         top: 0;
         left: 0;
         background-color: transparent;
-        border: white 6px dashed;
+        border-top: white 6px dashed;
+        border-bottom: white 6px dashed;
+    }
+
+    .logo-container {
+        position: absolute;
+        inset: 0;
+        padding: 15rem;
+
+        // &::before {
+        //     content: "Made By:";
+        //     position: absolute;
+        //     top: 1rem;
+        //     left: 1rem;
+        //     color: white;
+        //     font-weight: bold;
+        //     font-size: 1.5rem;
+        // }
+        .logo {
+            fill: white;
+        }
+
+    }
+
+    .github {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+
+        .fa-github {
+            color: white;
+        }
+    
+        .github-link {
+            color: white;
+        }
+    }
+
+    .email {
+        position: absolute;
+        bottom: 3rem;
+        right: 1rem;
+        font-size: 1.5rem;
+
+        .fa-envelope {
+            color: white;
+        }
+    
+        .email-link {
+            color: white;
+            text-decoration: underline;
+        }
     }
 }
 

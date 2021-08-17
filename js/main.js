@@ -411,15 +411,14 @@ lowerButtons.querySelector("button:nth-child(2)").addEventListener("click", () =
     startGame();
 })
 lowerButtons.querySelector("button:nth-child(3)").addEventListener("click", () => {
-    console.log("lower div");
+    window.open(`https://www.google.com/search?q=${mainWord}`);
 })
     
-
+// webpack
+// babel
 // add a way to tell if you won or lost
 // animation for wrong answers
-// about the word
 // slow/no internet message
 // error handling 
 // add tooltip  
-// ** change ::after color 
 // animation when a wrong answer is given
