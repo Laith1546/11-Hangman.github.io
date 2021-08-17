@@ -268,7 +268,6 @@ export const gameEnded = () => {
         lowerButtons.style.opacity = "0%";
         lowerButtons.style.display = "block";
 
-        console.log(window.innerWidth);
         if(window.innerWidth >= 1163){
             moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 350);
             moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 200);
@@ -508,7 +507,6 @@ const adjustScreen = () => {
 
 adjustScreen();
 window.addEventListener("resize", () => {
-    console.log(window.innerWidth);
     adjustScreen();
     // document.querySelector(".window").textContent = window.innerWidth;
 })
@@ -519,7 +517,3 @@ window.addEventListener("resize", () => {
 // babel
 // google analytics 
 // key words / tags
-
-// animation for wrong answers
-// animation when a wrong answer is given
-// add a way to tell if you won or lost

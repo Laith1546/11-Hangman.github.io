@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-fullpage@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/fullpage/-/fullpage-1.5.1.tgz#b37579339188ca28f3d3733aabdd0ad4b0f22565"
-  integrity sha512-Oqn2fWx8z85EH+fHEJbXDsXYrPFxlEzT/02wPW0AqqUshQZU/e5ht5n/zm5ajdi3I233ovBycnQ9PcEsfPI45w==
-
 granim@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/granim/-/granim-2.0.0.tgz#cd3905e97dd5cb5ef0b164b68d5073ac43f1eec6"
