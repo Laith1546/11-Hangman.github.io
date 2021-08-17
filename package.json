@@ -1,6 +1,6 @@
 {
   "name": "Modern-Hangman",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A simple game of Hangman",
   "main": "main.js",
   "repository": "git@github.com:Laith1546/11-Hangman.github.io.git",

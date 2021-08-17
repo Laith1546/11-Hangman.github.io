@@ -510,7 +510,7 @@ adjustScreen();
 window.addEventListener("resize", () => {
     console.log(window.innerWidth);
     adjustScreen();
-    document.querySelector(".window").textContent = window.innerWidth;
+    // document.querySelector(".window").textContent = window.innerWidth;
 })
 
 // add tooltip  
