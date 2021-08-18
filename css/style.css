@@ -26,6 +26,17 @@ body {
   z-index: 7;
 }
 
+.white-loader {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 200vh;
+  width: 100vw;
+  background-color: white;
+  z-index: 7;
+}
+
 .welcome {
   position: absolute;
   height: 100vh;
@@ -62,7 +73,7 @@ body {
 .welcome .green-slide .title {
   color: white;
   font-weight: bolder;
-  font-size: 5rem;
+  font-size: 4rem;
   border: white 5px dashed;
   padding: 1rem;
   border-radius: 15px;
@@ -76,12 +87,19 @@ body {
 }
 
 .warning {
-  z-index: 5;
+  display: none;
+  z-index: 7;
   position: absolute;
   top: 1rem;
   left: 3rem;
   right: 3rem;
   color: #ba1212;
+  background-color: white;
+  border-radius: 15px;
+  border: #ba1212 2px solid;
+  padding: 0.5rem;
+  -webkit-box-shadow: 0px 0px 5px black;
+          box-shadow: 0px 0px 5px black;
   font-size: 2rem;
   text-align: center;
   text-transform: capitalize;
@@ -113,7 +131,7 @@ body {
 }
 
 .main-container .overlay .menu {
-  min-width: 400px;
+  min-width: 300px;
   min-height: 250px;
   width: 50vw;
   height: 40vh;
@@ -602,6 +620,55 @@ body {
 @media all and (max-width: 750px) {
   .logo-container {
     padding: 10rem !important;
+  }
+  .game-type label,
+  .game-difficulty label {
+    display: none;
+  }
+  .ribbon {
+    display: none;
+  }
+}
+
+@media all and (max-width: 450px) {
+  .game-type label,
+  .game-difficulty label {
+    display: block;
+  }
+  .logo-container {
+    padding: 5rem !important;
+  }
+  .ribbon {
+    display: none;
+  }
+  .menu {
+    height: 480px !important;
+  }
+  .game-type span,
+  .game-difficulty span {
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+            flex-direction: column !important;
+  }
+  .game-type span button,
+  .game-difficulty span button {
+    margin-bottom: 3px !important;
+  }
+  .answers-list {
+    display: none;
+  }
+  .start-btn {
+    bottom: 0.5rem !important;
+  }
+  .letter {
+    height: 2rem !important;
+    width: 1.5rem !important;
+    font-size: 1.2rem !important;
+  }
+  .warning {
+    right: 4rem;
+    left: 4rem;
   }
 }
 /*# sourceMappingURL=style.css.map */

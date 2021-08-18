@@ -22,6 +22,10 @@ const afterColor = "white";
 const purplishColor = "#50178b";
 let mouseActive = true;
 const missingLetter = "hsl(0, 82%, 40%)";
+let onPhone = false;
+
+if(window.innerWidth <= 450) onPhone = true;
+// onPhone = true;
 
 // functions
 export const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out") => {
@@ -185,7 +189,7 @@ export const chooseWord = async (type) => {
         mainWord = nextWord[0];
         nextWord[1] = false;
     } else {
-        do {
+        do {  
             if(type === "noun"){
                 mainWord = await giveRandomNoun();
             }
@@ -228,7 +232,6 @@ export const chooseWord = async (type) => {
             if(mainWord.includes("-"))
                 wordLength--;
             wordDescDiv.textContent = `${article} ${game.type} with ${wordLength} letters.`;
-            // livesDiv.textContent = `lives: ${game.totalLives}`;
             livesDiv.textContent = `${game.totalLives}`;
         })
 
@@ -258,9 +261,11 @@ export const gameEnded = () => {
             element.style.padding = "0rem 0rem 2rem 0rem"
             element.style.width = "auto";
             
-            setTimeout(() => {
-                element.style.fontSize = "8rem";
-            }, 400);
+            if(!onPhone){
+                setTimeout(() => {
+                    element.style.fontSize = "8rem";
+                }, 400);
+            }
         })
     }, 300);
     // lower button
@@ -268,25 +273,29 @@ export const gameEnded = () => {
         lowerButtons.style.opacity = "0%";
         lowerButtons.style.display = "block";
 
-        if(window.innerWidth >= 1163){
-            moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 350);
-            moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 200);
-            moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 350);
-        } else if(window.innerWidth < 1163 && window.innerWidth > 778){
-            moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 400);
-            moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 400);
-            moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 200);
-        } else if(window.innerWidth < 778 && window.innerWidth > 691){
-            moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 400);
-            moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 200);
-            moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 200);
-        } else if(window.innerWidth <= 691){
-            moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 600);
-            moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 400);
-            moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 200);
-        } 
+        if(!onPhone){
+            if(window.innerWidth >= 1163){
+                moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 350);
+                moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 200);
+                moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 350);
+            } else if(window.innerWidth < 1163 && window.innerWidth > 778){
+                moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 400);
+                moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 400);
+                moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 200);
+            } else if(window.innerWidth < 778 && window.innerWidth > 691){
+                moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 400);
+                moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 200);
+                moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 200);
+            } else if(window.innerWidth <= 691){
+                moveIn(lowerButtons.querySelector("button:nth-child(1)"), "bottom", 300, 600);
+                moveIn(lowerButtons.querySelector("button:nth-child(2)"), "bottom", 300, 400);
+                moveIn(lowerButtons.querySelector("button:nth-child(3)"), "bottom", 300, 200);
+            } 
+    
+            setTimeout(() => lowerButtons.style.opacity = "100%", 100);
+        } else setTimeout(() => showMenu(), 1000);
+        
 
-        setTimeout(() => lowerButtons.style.opacity = "100%", 100);
     }, 1000)
 }
 
@@ -302,9 +311,11 @@ const highlightAnswer = async () => {
         const transColor = "rgba(0, 0, 0, 0)";
 
         if(div.textContent === wordInputEl.value && txtClr !== transColor){
-            if(div.classList.contains("answer"))
-                div.style.marginLeft = "2rem";
-            else div.style.transform = "translateY(-0.5rem)";
+            if(!onPhone){
+                if(div.classList.contains("answer"))
+                    div.style.marginLeft = "2rem";
+                else div.style.transform = "translateY(-0.5rem)";
+            }
 
             div.style.textShadow = 
                 `1px 1px 0px white,
@@ -319,9 +330,11 @@ const highlightAnswer = async () => {
                 wordInputEl.style.color = "white";
             }, 0)
         } else if(txtClr !== transColor){
-            if(div.classList.contains("answer"))
-                div.style.marginLeft = "1rem";
-            else div.style.transform = "translateY(0rem)";
+            if(!onPhone) {
+                if(div.classList.contains("answer"))
+                    div.style.marginLeft = "1rem";
+                else div.style.transform = "translateY(0rem)";
+            }
 
             div.style.textShadow = "none";
             div.style.color = "white";
@@ -334,7 +347,7 @@ const highlightAnswer = async () => {
 
 export const startGame = () => {
     wordDivEl.innerHTML = " ";
-    chooseWord(game.type);
+    chooseWord(game.type);    
     // setting variables
     game.hasStarted = 1;
     game.currentLives = game.totalLives;
@@ -366,6 +379,11 @@ export const startGame = () => {
     // scroll to the top
 window.scrollTo({ top: 0, behavior: 'smooth' });
  
+    // white loader
+setTimeout(() => {
+    document.querySelector(".white-loader").style.display = "none";
+},100);
+
     // welcome slide
 const welcomeSlideEl = document.querySelector(".green-slide");
 const slideSpeed = 600;
@@ -392,7 +410,7 @@ document.addEventListener("keydown", () => {
 wordInputEl.addEventListener('keydown', key => {
     setTimeout(highlightAnswer, 10);
 
-    if(key.code === "Enter" && wordInputEl.value !== ""){
+    if(key.which === 13 && wordInputEl.value !== ""){
         if(wordInputEl.value.includes(" ")) wordInputEl.value = wordInputEl.value.replace(" ", "-");
         checkWord(wordInputEl.value);
         wordInputEl.value = "";
@@ -492,7 +510,7 @@ const adjustScreen = () => {
             element.textContent = element.textContent.substring(0 , 4);
         })
 
-    } else if (window.innerWidth <= 900){
+    } else if (window.innerWidth <= 900 ){
         document.querySelector(".game-difficulty label").textContent = "Diff:";
 
         document.querySelectorAll(".game-type span button").forEach(element => {
@@ -509,11 +527,15 @@ adjustScreen();
 window.addEventListener("resize", () => {
     adjustScreen();
     // document.querySelector(".window").textContent = window.innerWidth;
+    
+    if(window.innerWidth <= 450) onPhone = true; 
+    else onPhone = false; 
 })
 
 // add tooltip  
 // phone sizing 
 // webpack
 // babel
+
 // google analytics 
 // key words / tags

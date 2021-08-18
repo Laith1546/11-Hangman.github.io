@@ -1,4 +1,4 @@
-import {game} from "./external.js";
+import {game, adjustType, adjustDiff} from "./external.js";
 import {startGame} from "./main.js";
 
 // elements
@@ -17,7 +17,8 @@ gameTypeButtonEls.forEach(element => {
         const targetColor = getComputedStyle(element).color;
         element.style.backgroundColor = targetColor;
         element.style.color = "white";
-        game.type = element.textContent.trim().toLowerCase();
+        if(!element.textContent.toLowerCase().includes("."))
+        game.type = adjustType(element.textContent.trim().toLowerCase());
     }
 })
 gameDiffButtonEls.forEach(element => {
@@ -36,7 +37,7 @@ gameTypeEl.addEventListener('click', (e) => {
     e.target.style.backgroundColor = targetColor;
     e.target.style.color = "white";
     e.target.classList.add("selected"); 
-    game.type = e.target.textContent.toLowerCase().toLowerCase();
+    game.type = adjustType(e.target.textContent.toLowerCase().toLowerCase());
 
     gameTypeButtonEls.forEach(element => {
         if(element.textContent.trim() !== e.target.textContent.trim() && element.classList.contains("selected")){
@@ -58,7 +59,7 @@ gameDiffEl.addEventListener('click', (e) => {
     e.target.style.color = "white";
     e.target.classList.add("selected"); 
 
-    switch(e.target.textContent.toLowerCase()){
+    switch(adjustDiff(e.target.textContent.toLowerCase())){
         case "easy":
             game.changeDifficulty("easy");
             break;
@@ -94,7 +95,7 @@ gameStartEl.addEventListener('click', () => {
 })
 
 document.onkeydown = (e) => {
-    if(e.code === "Enter" && !game.hasStarted){
+    if(e.which === 13 && !game.hasStarted){
         gameStartEl.disabled = true;
         loadingEl.style.display = "inline-block";
         startGame();

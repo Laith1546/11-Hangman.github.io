@@ -2,7 +2,6 @@ import {moveIn, gameEnded, mainWord} from "./main.js";
 
 const upperContainerEl = document.querySelector(".upper-container");
 const livesDiv = document.querySelector(".lives");
-// const upperCanvas = document.querySelector(".upper-canvas");
 
 export let nextWord = ["-", false, "noun"];
 
@@ -14,6 +13,7 @@ export const giveRandomNoun = async () => {
         return await data[0];
     } catch (error) {
         console.log(error);
+        document.querySelector(".warning").style.display = "block";
         moveIn(document.querySelector(".warning"), 300);
     }
 }
@@ -25,6 +25,7 @@ export const giveRandomAnimal = async () => {
         return await data[0];
     } catch (error) {
         console.log(error);
+        document.querySelector(".warning").style.display = "block";
         moveIn(document.querySelector(".warning"), 300);
     }
 }
@@ -38,6 +39,7 @@ export const giveRandomPokemon = async () => {
         return await data.name;
     } catch (error) {
         console.log(error);
+        document.querySelector(".warning").style.display = "block";
         moveIn(document.querySelector(".warning"), 300);
     }
 }
@@ -152,6 +154,17 @@ function prepareStates() {
     return states;
 }
 
+export const adjustType = (type) => {
+    if(type.includes("no")) return "noun";
+    else if(type.includes("an")) return "animal";
+    else if(type.includes("po")) return "pokemon";
+}
+
+export const adjustDiff = (diff) => {
+    if(diff.includes("ea")) return "easy";
+    else if(diff.includes("no")) return "normal";
+    else if(diff.includes("ha")) return "hard";
+}
 
 export let game = {
     totalLives: 9,
@@ -182,11 +195,11 @@ export let game = {
         }
     },
     changeDifficulty: (nr= 2) => {
-        if(nr === 1 || nr < 1 || nr === "easy"){
+        if(nr === 1 || nr < 1 || nr.includes("ea")){
             game.totalLives = 12;
             game.currentLives = game.totalLives;
             game.difficulty = 1;
-        } else if (nr === 2 || nr === "normal") {
+        } else if (nr === 2 || nr.includes("no")) {
             game.totalLives = 9;
             game.currentLives = game.totalLives;
             game.difficulty = 2;
@@ -213,12 +226,14 @@ export let game = {
                 currentDifficulty = "hard";
                 break;
             default:
-                currentType = "easy";
+                currentDifficulty = "easy";
         }    
 
         canvasGradient.changeState(`${currentDifficulty}-${game.totalLives-game.currentLives + 1}`);
     }
 }
+
+
 
 // gradients
 let canvasGradient = new Granim({

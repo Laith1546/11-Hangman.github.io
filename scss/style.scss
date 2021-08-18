@@ -42,6 +42,17 @@ body {
     z-index: 7;
 }
 
+.white-loader {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 200vh;
+    width: 100vw;
+    background-color: white;
+    z-index: 7;
+}
+
 .welcome {
     position: absolute;
     height: 100vh;
@@ -63,7 +74,7 @@ body {
         .title {
             color: white;
             font-weight: bolder;
-            font-size: 5rem;
+            font-size: 4rem;
             border: white 5px dashed;
             padding: 1rem;
             border-radius: 15px;
@@ -79,13 +90,18 @@ body {
 }
 
 .warning {
-    z-index: 5;
+    display: none;
+    z-index: 7;
     position: absolute;
     top: 1rem;
     left: 3rem;
     right: 3rem;
     color: $missing-letter;
-    // color: white;
+    background-color: white;
+    border-radius: 15px;
+    border: $missing-letter 2px solid;
+    padding: 0.5rem;
+    box-shadow: 0px 0px 5px black;
     font-size: 2rem;
     text-align: center;
     text-transform: capitalize;
@@ -155,7 +171,6 @@ body {
                         border: $extra-color 2px solid;
                         margin-right: 20px;
                         transition: color 200ms ease-out, background-color 200ms ease-out, transform 200ms ease-out;
-
                         &:active {
                             transform: scale(0.95); 
                          }
@@ -530,5 +545,62 @@ body {
 
     .logo-container {
         padding: 10rem !important;
+    }
+
+    .game-type label,
+    .game-difficulty label {
+        display: none;
+    }
+
+    .ribbon{
+        display: none;
+    }
+}
+
+@media all and (max-width: 450px) {
+
+    .game-type label,
+    .game-difficulty label {
+        display: block;
+    }
+
+    .logo-container {
+        padding: 5rem !important;
+    }
+    .ribbon{
+        display: none;
+    }
+
+    .menu {
+        height: 480px !important;
+    }
+
+    .game-type span, 
+    .game-difficulty span {
+        flex-direction: column !important;
+
+        button {
+            margin-bottom: 3px !important;
+        }
+    }
+
+    .answers-list{
+        display: none;
+    }
+
+    .start-btn {
+        bottom: 0.5rem !important;
+    }
+
+    .letter {
+        height: 2rem !important;
+        width: 1.5rem !important;
+        font-size: 1.2rem !important;
+        // display: block !important;
+    }
+
+    .warning {
+        right: 4rem;
+        left: 4rem;
     }
 }
