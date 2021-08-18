@@ -1,12 +1,10 @@
 {
   "name": "Modern-Hangman",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "A simple game of Hangman",
   "main": "main.js",
   "repository": "git@github.com:Laith1546/11-Hangman.github.io.git",
   "author": "Laith1564 <mjhshf12@gmail.com>",
-  "license": "GPL-3.0",
-  "dependencies": {
-    "hint.css": "^2.6.0"
-  }
+  "license": "MIT",
+  "dependencies": {}
 }
