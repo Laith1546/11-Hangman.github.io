@@ -2,4 +2,4 @@
 
 A modern game of Hangman
 
-*Under the terms of the GNU GPL v3.
+*Under the terms of the MIT license.
