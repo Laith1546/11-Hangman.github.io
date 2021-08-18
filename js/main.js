@@ -25,7 +25,6 @@ const missingLetter = "hsl(0, 82%, 40%)";
 let onPhone = false;
 
 if(window.innerWidth <= 450) onPhone = true;
-// onPhone = true;
 
 // functions
 export const moveIn = (element, from= "top", speed= 300, delay= 100, method= "ease-out") => {
@@ -533,7 +532,6 @@ window.addEventListener("resize", () => {
 })
 
 // add tooltip  
-// phone sizing 
 // webpack
 // babel
 

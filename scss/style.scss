@@ -21,7 +21,6 @@ $missing-letter: hsl(0, 82%, 40%);
     padding: 0px;
     box-sizing: border-box;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    // scroll-behavior: smooth;
 }
 
 
@@ -125,9 +124,6 @@ body {
         height: 100vh;
         width: 100vw;
         background-color: rgba(0, 0, 0, 0.6);
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
         transition: opacity 300ms ease-out;
 
         .menu {
@@ -251,7 +247,6 @@ body {
                 left: -4.5rem;
                 transform: rotate(35deg),;
                 background-color: $top-color;
-                // border-top: white 2px dotted;
             }
         }
     }
@@ -273,7 +268,6 @@ body {
     }
 
     .word {
-        // height: 3rem;
         width: 100%;
         text-align: center;
         position: absolute;
@@ -346,7 +340,6 @@ body {
             font-size: 2rem;
             margin: 1rem;
             text-transform: uppercase;
-            // color: rgb(218, 34, 34);
             color: white;
             font-weight: bolder;
             transition: text-shadow 300ms linear, color 300ms linear, margin 300ms ease-out;
@@ -357,7 +350,6 @@ body {
         z-index: inherit;
         position: absolute;
         height: 2rem;
-        // min-width: 3rem;
         bottom: 1rem;
         right: 1rem;
         text-transform: capitalize;
@@ -381,7 +373,6 @@ body {
     }
 
     .lower-buttons {
-        // background-color: red;
         min-width: 70vw;
         position: absolute;
         bottom: 3rem;
@@ -596,7 +587,6 @@ body {
         height: 2rem !important;
         width: 1.5rem !important;
         font-size: 1.2rem !important;
-        // display: block !important;
     }
 
     .warning {

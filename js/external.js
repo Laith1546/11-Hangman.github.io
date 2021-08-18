@@ -177,7 +177,6 @@ export let game = {
     decreaseLives: () => {
         if((game.currentLives-1) <= 0) {
             game.currentLives = 0;
-            // livesDiv.textContent = `lives: 0`;
             setTimeout(() => game.hasStarted = 0, 1000);
             gameEnded();
         } else {
@@ -238,7 +237,6 @@ export let game = {
 // gradients
 let canvasGradient = new Granim({
     element: ".upper-canvas",
-    // direction: "radial",
     direction: "diagonal",
     isPausedWhenNotInView: true,
     stateTransitionSpeed: 500,
