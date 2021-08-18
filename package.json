@@ -7,7 +7,6 @@
   "author": "Laith1564 <mjhshf12@gmail.com>",
   "license": "GPL-3.0",
   "dependencies": {
-    "granim": "^2.0.0",
     "hint.css": "^2.6.0"
   }
 }
